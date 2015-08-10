@@ -18,7 +18,6 @@ include_once basename(__DIR__) . '/../model/PizzaFactory.php';
 include_once basename(__DIR__) . '/../model/Pizza.php';
 include_once basename(__DIR__) . '/../model/Articolo.php';
 
-include_once basename(__DIR__) . '/../model/ElencoArticoli.php';
 include_once basename(__DIR__) . '/../model/Articolo.php';
 
 class ClienteController extends BaseController {
