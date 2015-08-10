@@ -19,7 +19,6 @@
 <!--<script type="text/javascript" src="../js/sidebar-form-ui.js"></script>-->
 <link rel="stylesheet" type="text/css" href="../css/form-style.css">
 
-
 <script>
 function checkIfOptionIsSelected() { 
     if (document.forms['aggiungi'].firstChild.parentElement[0].value == '') { 
