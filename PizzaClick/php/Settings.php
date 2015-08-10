@@ -31,10 +31,10 @@ class Settings {
                     // configurazione locale
                     self::$appPath = 'http://' . $_SERVER['HTTP_HOST'] . '/Progetto-AMM/PizzaClick/';
                     break;
-//                case 'spano.sc.unica.it':
+                case 'spano.sc.unica.it':
 //                    // configurazione pubblica
-                    self::$appPath = 'http://' . $_SERVER['HTTP_HOST'] . '/amm2014/continiMattia/';
-//                    break;
+                    self::$appPath = 'http://' . $_SERVER['HTTP_HOST'] . '/amm2014/continiMattia/PizzaClick/';
+                    break;
 
                 default:
                     self::$appPath = '';
