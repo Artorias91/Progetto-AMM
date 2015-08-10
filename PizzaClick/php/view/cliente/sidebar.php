@@ -19,6 +19,7 @@
 <!--<script type="text/javascript" src="../js/sidebar-form-ui.js"></script>-->
 <link rel="stylesheet" type="text/css" href="../css/form-style.css">
 
+
 <script>
 function checkIfOptionIsSelected() { 
     if (document.forms['aggiungi'].firstChild.parentElement[0].value == '') { 
@@ -50,7 +51,7 @@ function checkIfOptionIsSelected() {
         <select name="size" id="size">
           <option value="ridotta">Ridotta</option>
           <option value="normale" selected>Normale</option>
-          <option value="gigante">Gigante</option>
+          <option value="grande">Grande</option>
         </select><br>
         <label for="quantity">Quantit&agrave;</label>
         <select name="quantity" id="quantity">

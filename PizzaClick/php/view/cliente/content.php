@@ -112,7 +112,7 @@ switch ($vd->getSottoPagina()) {
                 <select name="size" id="size">
                     <option value="ridotta">Ridotta</option>
                     <option value="normale" selected>Normale</option>
-                    <option value="gigante">Gigante</option>
+                    <option value="grande">Grande</option>
                 </select><br>
                 <label for="quantity">Quantit&agrave;</label>
                 <select name="quantity" id="quantity">

@@ -18,7 +18,7 @@ class Articolo {
     
     /**
      * Incremento del costo base della pizza nel caso la dimensione
-     * sia 'gigante'
+     * sia 'Grande'
      */
     const IncrCost = 0.5;
 
@@ -33,7 +33,7 @@ class Articolo {
     
     const Normale = 'normale';
     
-    const Gigante = 'gigante';
+    const Grande = 'grande';
 
 
     static $count;
@@ -50,7 +50,7 @@ class Articolo {
     private $pizza;
     
     /**
-     * Dimensione della pizza (ridotta|normale|gigante|).
+     * Dimensione della pizza (ridotta|normale|grande).
      * @var string
      */        
     private $size;
@@ -156,14 +156,14 @@ class Articolo {
     private function setSize($size) {
         if(strtolower($size) == self::Normale || 
                 strtolower($size) == self::Ridotta || 
-                strtolower($size) == self::Gigante) {
+                strtolower($size) == self::Grande) {
             $this->size = strtolower($size);            
 
             switch (strtolower($size)) {
                 case self::Ridotta :
                     $this->prezzo_pizza += self::DecrCost;
                     break;
-                case self::Gigante :
+                case self::Grande :
                     $this->prezzo_pizza += self::IncrCost;                    
                     break;
                 default :

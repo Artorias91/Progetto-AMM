@@ -70,8 +70,9 @@ $(document).ready(function () {
         <div class="resume">
             <span class="qty" style="position: relative; left: -43px;"><?= $this->getQtyTotalePizze() . ' pizze'?></span>
             <span class="subtot" style=" position: relative; right: -55px;">&euro;<?= $this->getPrezzototale() ?></span>
-            <input style="position: relative; right: -66px;" class="checkout"
-            type="submit" value="Ordina">
+            <form method="get" action="cliente?cmd=conferma_ordine_step1" style="display: inline;">
+                <input style="position: relative; right: -66px;" class="checkout" type="submit" value="Ordina">
+            </form>
         </div>
     </div>
         <?php        
