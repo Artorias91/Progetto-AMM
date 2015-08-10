@@ -44,6 +44,7 @@ $(function () {
         $("#size").selectmenu("enable");
         $("#quantity").selectmenu("enable");
         $(".addPizza").prop("disabled", false);
+        $(".addPizza").addClass('addPizza-on');
     }
 
    });

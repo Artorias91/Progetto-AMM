@@ -10,8 +10,9 @@
     </li>
 </ul>
 <script>
-    $(function() {
-      $( "#calendar" ).datepicker($.datepicker.regional['it']);
-    });
+//    $(function() {
+//      $( "#calendar" ).datepicker(
+//        $.datepicker.regional['it']);
+//    });
 </script>
-<div id="calendar" style="height: 232px;"></div>
+<!--<div id="calendar" style="height: 232px;"></div>-->

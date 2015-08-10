@@ -44,8 +44,6 @@ $(document).ready(function () {
             <div class="cart-qty">
                 <div class="cart-qty-ct"> <?= $this->getQtyTotalePizze()?> </div>
             </div>
-            <!--<img src="img/cart-icon5.png">-->
-            <!--<span class="cart-qty"> 0 </span>-->		
         </div>
     </div>
         <?php

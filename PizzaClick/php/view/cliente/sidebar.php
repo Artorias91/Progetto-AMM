@@ -12,11 +12,11 @@
         default:
 ?>
 <!-- lib jQuery UI -->
-<!--<script src="../lib/jquery-ui-1.11.3/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="../lib/jquery-ui-1.11.3/jquery-ui.min.css">-->
+<script src="../lib/jquery-ui-1.11.3/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="../lib/jquery-ui-1.11.3/jquery-ui.min.css">
 
 <!-- script e css -->
-<!--<script type="text/javascript" src="../js/sidebar-form-ui.js"></script>-->
+<script type="text/javascript" src="../js/sidebar-form-ui.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/form-style.css">
 
 

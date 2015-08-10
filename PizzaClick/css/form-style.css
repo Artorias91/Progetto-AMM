@@ -150,7 +150,8 @@ button.addPizza {
     
     margin-left: 33%;    
 }
-.addPizza:hover {
+.addPizza-on:hover,
+.addPizza-on.active {
     background-color: rgb(236, 234, 234);
 }
 
