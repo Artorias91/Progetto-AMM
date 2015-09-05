@@ -11,14 +11,14 @@ class Settings {
     public static $db_host = 'localhost';
     
     //server
-    public static $db_user = 'continiMattia';
-    public static $db_password = 'elefante984';
-    public static $db_name='amm14_continiMattia';
+//    public static $db_user = 'continiMattia';
+//    public static $db_password = 'elefante984';
+//    public static $db_name='amm14_continiMattia';
 
     //locale
-//    public static $db_user = 'root';
-//    public static $db_password = 'davide';    
-//    public static $db_name='continiMattia';
+    public static $db_user = 'root';
+    public static $db_password = 'davide';    
+    public static $db_name='continiMattia';
     
     private static $appPath;
 

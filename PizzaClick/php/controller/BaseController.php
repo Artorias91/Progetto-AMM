@@ -218,7 +218,7 @@ class BaseController {
         //nessun errore rilevato e nessuna modifica applicata
         if(empty($msg_e) && empty($msg_c)) {
             $ifMsg = 'Nessuna modifica applicata:' .
-            "</br><span style=\"font-size: 8pt;\">$ifMsg</span></li>";
+            "<br><span style=\"font-size: 8pt;\">$ifMsg</span></li>";
             $vd->setMessaggioErrore($ifMsg);
         }
     }        
@@ -239,7 +239,7 @@ class BaseController {
                     return;//$msg_e[] = '<li>Lo username inserito &egrave; gi&agrave; in uso.</li>';
                 } elseif(!$user->setUsername($request['username'])) {
                     $msg_e[] = '<li>Lo username inserito non è valido:' .
-                            "</br><span style=\"font-size: 8pt;\">puoi inserire solo lettere " . 
+                            "<br><span style=\"font-size: 8pt;\">puoi inserire solo lettere " . 
                             '(devono essere almeno 5)</span></li>';
                 } else {
                     $msg_c[] = '<li>Lo username inserito &egrave; stato aggiornato</li>';

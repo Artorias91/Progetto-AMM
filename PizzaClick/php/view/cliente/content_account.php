@@ -30,14 +30,14 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="cliente/pagamento">Visualizza i tuoi metodi</br>di pagamento</a>                    
+                            <a href="cliente/pagamento">Visualizza i tuoi metodi<br>di pagamento</a>                    
                         </li>
                     </ul>
                 </td>
                 <td>
                     <ul>
                         <li>
-                            <a href="cliente/indirizzo">Modifica il tuo indirizzo</br>di consegna</a>                    
+                            <a href="cliente/indirizzo">Modifica il tuo indirizzo<br>di consegna</a>                    
                         </li>
                     </ul>
                 </td>

@@ -303,8 +303,8 @@ class UserFactory {
         $stmt->close();
         $mysqli->close();
         
-        echo 'username:' . $user->getUsername() . '</br>';
-        echo 'count:' . $count . '</br>';
+        echo 'username:' . $user->getUsername() . '<br>';
+        echo 'count:' . $count . '<br>';
         
         return $count;
     }
@@ -361,7 +361,7 @@ class UserFactory {
             return 0;
         }
         
-//        echo 'affected_rows: ' . $stmt->affected_rows . '</br>';
+//        echo 'affected_rows: ' . $stmt->affected_rows . '<br>';
 
 //        if($stmt->affected_rows == 0)
 //            return 1;
@@ -557,7 +557,7 @@ class UserFactory {
         
         $stmt->close();
         
-//        echo "numero: " . $count . '</br>';
+//        echo "numero: " . $count . '<br>';
         
         return $count < 1 ? false : true;
     }
