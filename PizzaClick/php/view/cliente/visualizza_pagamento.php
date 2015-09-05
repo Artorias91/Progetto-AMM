@@ -1,12 +1,12 @@
 <form method="get" action="cliente/impostazioni<?= '?'.$vd->scriviToken()?>">
     <label for="titolareCarta">Nome del titolare della carta</label>
-    <input readonly required placeholder="Nome e cognome" name="titolareCarta" id="titolareCarta"
+    <input class="text" readonly required placeholder="Nome e cognome" name="titolareCarta" id="titolareCarta"
            value="<?= $carta->getTitolareCarta() ?>"/><br>
     <label for="numeroCarta">Numero della carta</label>
-    <input readonly required maxlength="16" name="numeroCarta" id="numeroCarta"
+    <input class="text" readonly required maxlength="16" name="numeroCarta" id="numeroCarta"
            value="<?= $carta->getNumeroCarta() ?>"/><br>
     <label for="codiceCarta">Codice di sicurezza</label>
-    <input readonly required maxlength="3" name="codiceCarta" type="password" id="codiceCarta"
+    <input class="text" readonly required maxlength="3" name="codiceCarta" type="password" id="codiceCarta"
            value="<?= $carta->getCodiceCarta() ?>"/><br>
     <fieldset class="scadenza">
         <legend>Data di scadenza</legend>

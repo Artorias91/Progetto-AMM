@@ -13,7 +13,7 @@
             ?>
         </p>
         <?php if (isset($login)) { ?>
-            <p>Puoi autenticarti alla pagina di <a href="login">login</a></p>
+        <p>Puoi autenticarti alla pagina di <a href="<?= Settings::getApplicationPath() ?>php/login">login</a></p>
         <?php } ?>
     </body>
 </html>

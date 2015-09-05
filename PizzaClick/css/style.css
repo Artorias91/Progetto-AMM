@@ -1,5 +1,6 @@
 body {
     font: 13px/15px "Open Sans", Arial, sans-serif;
+    color: #333;
 }
 
 /*body {
@@ -9,12 +10,16 @@ body {
 	font-size: 14px;
 }*/
 
-.header, footer {
-    background: violet;
+.header, .footer {
     height: 50px;
     width: 100%;
     position: relative;
-} 
+    background-color: #EA951C;    
+}
+
+.header {
+    margin-bottom: 5%;
+}
 
 .page {
 /*	margin: 2% auto 2% auto;
@@ -40,34 +45,16 @@ body {
         padding-left: 1%;
 }
 
-.footer {
-	width: 100%;
-}
-
-
 nav {
-/*    background-color: #EA951C;
-    box-shadow: 0 0 4px 2px #D06563;
-    z-index: 9999;	
-    position: fixed;
-    width: 100%;
-    height: 42px;
-    top: 0;
-    right: 0;
-    left: 0;    
-    padding: 5px;*/
-    background-color: #EA951C;
     width: 100%;
     height: 100%;
     display: table;
-    /*position: absolute;*/
-
 }
 
 
 div.cart-container {
-    width: 250px;
-    height: 100%;
+/*    width: 250px;
+    height: 100%;*/
     vertical-align: middle;
     display: table-cell;
 }
@@ -76,9 +63,7 @@ div.cart-container {
 
 nav div.nav {
     float: right;
-    width: 210px;
-    top: 0px;
-    right: 0px;
+    padding-right: 6%;
     display: table;
     height: 100%;
 }
@@ -102,25 +87,29 @@ li.link a {
     padding: 5px;
 }
 
-li.link:hover, li.link a:hover {
+li.link:hover, li.link a:hover, .footer a:hover {
     color: #E0E6EF;
     text-decoration: underline;
 }
 
+.nav a:hover, .footer a:hover {
+    font-weight: normal;
+}
+
 
 input.checkout {
-	border-radius: 4px;
-	border: 1px solid rgba(182, 182, 182, 0.95);
-	cursor: pointer;
-	padding: 7px;
-	color: rgb(255, 255, 239);
-	background: rgb(125, 207, 133);
+    border-radius: 2px;
+    border: 1px solid transparent;
+    padding: 6px 25px;
+    color: rgb(255, 255, 239);
+    background: rgb(125, 207, 133);
+    width: 100%;
 }
 
 input.checkout:hover {
-	background: rgb(114, 182, 118);
-  	box-shadow: 0 0 4px #34591F;
-	border: 1px solid #34591F;
+    background: rgb(114, 182, 118);
+    box-shadow: 0 0 4px #34591F;
+    border: 1px solid #34591F;
 }
 
 
@@ -204,7 +193,8 @@ div.dropdown {
 
 .left-dd {
     left: 8px;
-    width: 343px;
+    width: 325px;
+    padding: 1%;
 }
 
 .right-dd {
@@ -212,51 +202,6 @@ div.dropdown {
     width: 192px;
 }
 
-/*a.checkout {
-	display: block;
-	width: 100%;
-	height: 60px;
-	line-height: 60px;
-	background: #7dcf85;
-	color: #FFF;
-	text-align: center;
-}*/
-
-
-
-a.remove-item {
-    position: absolute;
-    top: 7%;
-    left: 90%;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: url('../img/remove-icon.png') no-repeat center center;
-    cursor: pointer;
-}
-
-a.remove-item:hover {
-    background-color: #e0e6ef;
-}
-
-
-ul.items {
-    padding: 0;
-    margin: 0;
-    /*position: relative;*/
-    top: -10px;
-    list-style-type: none;
-}
-
-
-li.item {
-    color: #e0e6ef;
-    position: relative;
-    padding: 3px 0 3px 0;
-    margin: 0;
-    /* text-align: left; */
-    border-bottom: 1px solid #e0e6ef;
-} 
 
 li.item:hover {
     background:  rgb(191, 125, 125);
@@ -310,8 +255,9 @@ div.dropdown-pointer {
     text-decoration: none;
 }
 
-.ul-account li a:hover {
+ul li a:hover {
     text-decoration: underline;
+    font-weight: bold;
 }
 
 p.logout {
@@ -331,7 +277,6 @@ p.logout a:link:hover {
 
 div.login-box {
     width: 65%;
-    margin: 15px 0;
     padding: 21px 3px;
 
     border: 1px solid #C1C1C1;
@@ -351,10 +296,22 @@ div.login-box {
     width: 37%;
 }
 
-.login-box input[type="submit"] {
-    width: auto;
+input[type="submit"] {
+    cursor: pointer;
 }
 
+input[type="radio"] {
+    margin-top: -2px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+
+div.sub {
+    border: 2px solid grey;
+    padding: 5%;
+    border-radius: 10px;  
+}
 
 .login-box h2 {
     text-align: center;
@@ -362,18 +319,26 @@ div.login-box {
 }
 
 
-
-ol {
-  list-style-type: none;
-  display: inline-flex;
-  color: darkgrey;
+.actual {
+    font-weight: bold;
 }
 
-ol a {
+.uncompleted {
+    color: darkgrey;
+}
+
+
+ol.breadcrumb {
+    list-style-type: none;
+    display: inline-flex;
+    color: darkgrey;
+}
+
+.breadcrumb a {
     color: dimgrey;
 }
 
-ol a:hover {
+.breadcrumb a:hover {
     color: darkgoldenrod;
 }
 
@@ -397,7 +362,7 @@ label {
     width:30%;
 }
 
-input {
+input.text {
     margin: 5px 1%;
     padding-left: 5px;
     
@@ -428,4 +393,159 @@ fieldset > input {
 fieldset.scadenza > label {
     width: auto;
     margin-left: 5%;
+}
+
+
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    table-layout: fixed;
+    line-height: 1.1em;
+}
+
+.resume-order {
+    border: 1px solid #ddd;
+}
+
+.resume-order thead, 
+.pagamenti thead, .ordini thead {
+    background: #CBC;
+    color: #FFF;
+}
+
+.resume-order tbody, 
+.pagamenti tbody, .ordini tbody {
+    text-align: center;
+}
+
+.par {
+    background: rgba(211, 206, 185, 0.34);;
+}
+
+.resume-order th, 
+.pagamenti th,
+.ordini th {
+    font-size: 1.1em;
+    padding: 0.3em;
+    width: 25%;
+    border: 1px solid #ddd;
+}
+
+.ordini th {
+    font-size: 1.0em;
+}
+
+.ordini, .ordini th {
+    width: auto;
+}
+
+
+.resume-order td,
+.ordini td {
+    border: 1px solid #ddd;
+    /*vertical-align: sub;*/
+    padding: 0.5em;    
+}
+
+
+/*.subtotal-price, .procedi {
+    text-align: right;
+}*/
+
+
+table.account td > ul, table.ordini td > ul {
+    list-style-type: square;    
+    margin: 0;    
+    text-align: left;
+    padding-left: 1.3em;    
+}
+
+
+
+
+
+.content-resume-price {
+    float: right; 
+    border: 1px solid #ddd; 
+    padding: 2%; border-radius: 3px;
+    background-color: #F0EFEF;
+}
+
+
+.carrello tbody {
+    text-align: center;
+}
+
+
+.carrello td a {
+    display: table;
+}
+
+td a img {
+    display: table-cell;
+}
+
+.carrello td a {
+    border-radius: 50%;
+}
+
+.carrello td a:hover {
+    background: #ddd;
+}
+
+.carrello {
+    color: #ddd;
+}
+
+.carrello thead {
+    text-shadow: 1px 1px 0px #555;
+    background-color: rgb(183, 135, 135);
+}
+
+.carrello tbody tr.item:hover {
+    background-color: rgb(165, 107, 107);
+}
+
+
+.html {
+  background: url('../img/html.gif') no-repeat;
+}
+
+.css {
+  background: url('../img/html.gif') no-repeat;  
+}
+
+.html, .css {
+    background-position: left;
+    padding-left: 55px;    
+}
+
+.footer ul {
+    padding: 0;
+}
+
+.footer li {
+    display: inline-block;  
+    padding-right: 1.5em;    
+}
+
+.footer a {
+    color: #5A5247;
+}
+
+.footer { 
+    display: table; 
+    margin-top: 3%;
+}
+.footer-content {
+    vertical-align: middle;
+    display: table-cell;
+    padding: 0 25%;
+}
+
+
+select {
+    width: 150px;
 }

@@ -90,6 +90,53 @@ class PagamentoFactory {
         return $pagamenti;
     }
 
+    
+    /**
+     * Cerca un metodo di pagamento per id 
+     * @param $id
+     * @return \Pizza un oggetto Pizza nel caso sia stato trovato,
+     */    
+    public function cercaPagamentoPerId($id) {
+        $intval = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        if (!isset($intval)) {
+            return null;
+        }
+        $query = "select * from pagamenti where id = ?";
+        
+        $mysqli = Db::getInstance()->connectDb();
+        
+        if (!isset($mysqli)) {
+            error_log("[cercaPagamentoPerId] impossibile inizializzare il database");
+            $mysqli->close();
+            return null;
+        }
+  
+        $stmt = $mysqli->stmt_init();
+        $stmt->prepare($query);
+        if (!$stmt) {
+            error_log("[cercaPagamentoPerId] impossibile" .
+                    " inizializzare il prepared statement");
+            $mysqli->close();
+            return null;
+        }
+
+        if (!$stmt->bind_param('i', $intval)) {
+            error_log("[cercaPagamentoPerId] impossibile" .
+                    " effettuare il binding in input");
+            $mysqli->close();
+            return null;
+        }
+
+        $pagamento =  self::caricaPagamentiDaStmt($stmt)[0];
+        
+//        var_dump($pagamento);
+
+        $mysqli->close();
+        
+        return $pagamento;
+    }
+    
+    
     /**
      * Carica una lista di pagamenti eseguendo un prepared statement
      * @param mysqli_stmt $stmt

@@ -28,7 +28,7 @@ $(function () {
           var $data_ingred = $(this).data("uiSelectmenuItem").element.data("ingredienti");
           var $data_prezzo = $(this).data("uiSelectmenuItem").element.data("prezzo");
 
-          return '<b>Ingredienti extra: </b>' + $data_ingred + '<br><b>Prezzo: </b>€' + $data_prezzo;
+          return '<b>Ingredienti extra: </b>' + $data_ingred + '<br><b>Prezzo: </b>EURO ' + $data_prezzo;
         }
       });
     },

@@ -150,7 +150,7 @@ class BaseController {
         $vd->setTitolo("Pizza Click! - login");
         $vd->setContentFile(basename(__DIR__) . '/../view/login/login-content.php');
         $vd->setHeaderFile(basename(__DIR__) . '/../view/admin/header.php');
-        $vd->setSidebarFile(basename(__DIR__) . '/../view/admin/sidebar.php');
+        $vd->setSidebarFile(basename(__DIR__) . '/../view/login/login-sidebar.php');
    
     }
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Ago 09, 2015 alle 18:44
+-- Generato il: Set 05, 2015 alle 12:27
 -- Versione del server: 5.5.35
 -- Versione PHP: 5.4.6-1ubuntu1.7
 
@@ -59,16 +59,18 @@ CREATE TABLE IF NOT EXISTS `articoli` (
   UNIQUE KEY `id` (`id`),
   KEY `pizze_fk` (`pizza_id`),
   KEY `ordini_fk` (`ordine_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dump dei dati per la tabella `articoli`
 --
 
 INSERT INTO `articoli` (`id`, `size`, `qty`, `prezzo`, `pizza_id`, `ordine_id`) VALUES
-(1, 'Normale', 3, 7.5, 2, 1),
-(2, 'Gigante', 2, 8, 3, 1),
-(3, 'Ridotta', 1, 4, 5, 1);
+(1, 'normale', 1, 2.5, 1, 1),
+(2, 'normale', 1, 2.5, 2, 1),
+(3, 'normale', 10, 45, 4, 2),
+(4, 'grande', 5, 25, 5, 3),
+(5, 'ridotta', 5, 15, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -150,19 +152,20 @@ CREATE TABLE IF NOT EXISTS `ordini` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `data_conclusione` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `data_creazione` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `prezzo` float DEFAULT NULL,
-  `spedito` tinyint(1) DEFAULT NULL,
+  `subtotale` float DEFAULT NULL,
   `cliente_id` bigint(20) unsigned DEFAULT NULL,
   UNIQUE KEY `id` (`id`),
   KEY `clienti_fk` (`cliente_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dump dei dati per la tabella `ordini`
 --
 
-INSERT INTO `ordini` (`id`, `data_conclusione`, `data_creazione`, `prezzo`, `spedito`, `cliente_id`) VALUES
-(1, '2015-07-13 10:42:41', '2015-07-13 10:35:28', 19.5, NULL, 1);
+INSERT INTO `ordini` (`id`, `data_conclusione`, `data_creazione`, `subtotale`, `cliente_id`) VALUES
+(1, '0000-00-00 00:00:00', '2015-09-04 10:07:39', 5, 1),
+(2, '0000-00-00 00:00:00', '2015-09-04 15:46:54', 45, 1),
+(3, '0000-00-00 00:00:00', '2015-09-04 23:12:00', 40, 1);
 
 -- --------------------------------------------------------
 

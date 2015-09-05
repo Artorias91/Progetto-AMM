@@ -16,9 +16,9 @@ include_once basename(__DIR__) . '/../model/UserFactory.php';
 
 include_once basename(__DIR__) . '/../model/PizzaFactory.php';
 include_once basename(__DIR__) . '/../model/Pizza.php';
-include_once basename(__DIR__) . '/../model/Articolo.php';
+include_once basename(__DIR__) . '/../model/ArticoloSession.php';
+include_once basename(__DIR__) . '/../model/OrdineFactory.php';
 
-include_once basename(__DIR__) . '/../model/Articolo.php';
 
 class ClienteController extends BaseController {
 
@@ -59,7 +59,8 @@ class ClienteController extends BaseController {
                     case 'base':
                         $vd->setSottoPagina('base');
                         $vd->setBreadcrumb("Modifica username o e-mail");
-                        
+                        file_put_contents('text.txt', '63: ' . $_REQUEST['subpage']);
+
                         break;
                     case 'password':
                         $vd->setSottoPagina('password');
@@ -90,6 +91,45 @@ class ClienteController extends BaseController {
                         
                         $vd->setSottoPagina('account');
                         break;
+                    case 'conferma_ordine_step1':
+                        file_put_contents('text.txt', '96: ' . $_REQUEST['subpage']);
+
+                        $vd->setSottoPagina('conferma_ordine_step1');
+                        
+                        $vd->setTitoloStep('Passo 1: seleziona indirizzo di consegna');
+                        
+//                        $this->showHomeCliente($vd);
+                        
+                        break;
+                    case 'conferma_ordine_step2':
+                        file_put_contents('text.txt', '106: ' . $_REQUEST['subpage']);
+
+                        $vd->setSottoPagina('conferma_ordine_step2');
+                        
+                        $vd->setTitoloStep('Passo 2: riepilogo articoli');
+                        
+//                        $this->showHomeCliente($vd);
+                        
+                        break;
+                    case 'conferma_ordine_step3':
+                        file_put_contents('text.txt', '116: ' . $_REQUEST['subpage']);
+                        
+                        $vd->setSottoPagina('conferma_ordine_step3');
+
+                        $vd->setTitoloStep('Passo 3: seleziona metodo di pagamento');
+                        
+                        $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);
+                        
+//                        $this->showHomeCliente($vd);
+                                                
+                        break;
+                    case 'cronologia_ordini':
+                        $ordini = OrdineFactory::instance()->getListaOrdiniPerCliente($user);
+                        $vd->setSottoPagina('cronologia_ordini');
+                        $vd->setBreadcrumb("Visualizza cronologia ordini");
+                        
+                        break;
+
                     default:
                         $msg = array();
                         if (!isset($_SESSION[self::elenco_articoli])) {
@@ -103,6 +143,38 @@ class ClienteController extends BaseController {
             
             if(isset($request["cmd"])) {
                 switch ($request["cmd"]) {
+                    //salvataggio permanente elenco articoli
+                    case 'ordina':
+//                        $msg = array();
+//                        $msgb = array();
+//                        $msgc = array();                        
+                        
+                        if(!empty($_SESSION[self::elenco_articoli])) {
+                            if(isset($request['carta'])) {
+                                $carta = intval($request['carta']);
+//                                file_put_contents('text.txt', "ordinannana");
+                                $pagamento = PagamentoFactory::instance()->cercaPagamentoPerId($carta);                        
+                                if($pagamento->getSaldo() < $this->getSubTotale(true)) {
+                                    $msg[] = '<li>Spiacente. Il credito non &egrave; sufficiente</li>';
+                                    $vd->setTitoloStep('Passo 3: seleziona metodo di pagamento');
+                                    $vd->setSottoPagina('conferma_ordine_step3');
+                                    
+                                } else {
+                                    OrdineFactory::instance()->
+                                            salvaOrdine($_SESSION[self::elenco_articoli], $user->getId(), $this->getSubTotale());
+                                    $_SESSION[self::elenco_articoli] = array();
+                                    
+                                    $vd->setSottoPagina('home');                                    
+                                }
+                            }
+                        }
+//                        $this->creaFeedbackUtente($vd, $msg, $msgb, $msgc);
+                        
+                        $this->showHomeCliente($vd);
+                        $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);                        
+
+                        break;
+                    
                     case 'remove':
                         if(isset($request['key'])) {
                             $key = intval($request['key']);
@@ -110,10 +182,19 @@ class ClienteController extends BaseController {
                                 $this->rimuoviArticolo($_SESSION[self::elenco_articoli][$key]);
                             }
                         }
-                        $vd->setSottoPagina('home');
+
+                        $subpage = $_REQUEST['subpage'];
+                        file_put_contents('text.txt', '182: ' . $subpage);
+      
+                        
+                        if(empty($_SESSION[self::elenco_articoli])) {
+                            $subpage = 'home';
+                            $vd->setSottoPagina('home');                        
+                        } 
+                        
                         $this->showHomeCliente($vd);
 
-                        header('Location: ' . Settings::getApplicationPath() . 'php/cliente/home');
+                        header('Location: ' . Settings::getApplicationPath() . "php/cliente/$subpage");
                         exit();
 
                         break;
@@ -123,7 +204,7 @@ class ClienteController extends BaseController {
                      * ovvero una quantità di pizze di un determinato tipo e di una certa dimensione
                      */
                     case 'add':
-//                        file_put_contents('php/text.txt', $request['pizza-gallery'], FILE_APPEND);
+//                        file_put_contents('text.txt', $request['pizza-gallery'], FILE_APPEND);
 //                        file_put_contents('php/text.txt', "\r\n", FILE_APPEND);
 //                        file_put_contents('php/text.txt', $request['quantity'], FILE_APPEND);
 //                        file_put_contents('php/text.txt', "\r\n", FILE_APPEND);
@@ -132,7 +213,7 @@ class ClienteController extends BaseController {
                         //controlla la provenienza della richiesta: form's sidebar ...
                         if(isset($request['pizza-selection']) && isset($request['size']) && isset($request['quantity'])) {
                             
-                            $articolo = new Articolo(PizzaFactory::instance()->
+                            $articolo = new ArticoloSession(PizzaFactory::instance()->
                                     cercaPizzaPerId(intval($request['pizza-selection'])), $request['size'], intval($request['quantity']));
                             
                             $this->aggiungiArticolo($articolo);
@@ -142,7 +223,7 @@ class ClienteController extends BaseController {
 
                             $key = intval($request['pizza-gallery']);
                             if(array_key_exists($key, $listaPizzeConImg)) {
-                                $articolo = new Articolo(PizzaFactory::instance()->
+                                $articolo = new ArticoloSession(PizzaFactory::instance()->
                                         cercaPizzaPerId($listaPizzeConImg[$key]->getId()), $request['size'], intval($request['quantity']));
                                                             
                             $this->aggiungiArticolo($articolo);                              
@@ -283,15 +364,22 @@ class ClienteController extends BaseController {
         return $totale;      
     }
 
-    private function getPrezzoTotale() {
-        $totale = 0;
+    /**
+     * Calcola il prezzo dell'ordine attuale
+     * @param boolean $flag abilita/disabilita il prezzo di spedizione
+     * @return float prezzo dell'ordine
+     */
+    private function getSubTotale($flag = false) {
+        (!$flag) ? $totale = 0 : $totale = 3;
         if(!empty($_SESSION[self::elenco_articoli])) {
             foreach ($_SESSION[self::elenco_articoli] as $value) {
                 $totale += $value->getPrezzoArticolo();            
             }            
         }
-        return $totale;        
+        
+        return number_format((float)$totale, 2, ',', '');        
     }
+    
 
     /**
      * Aggiunge un articolo alla lista se non presente, 
@@ -300,7 +388,7 @@ class ClienteController extends BaseController {
      * @return boolean true se l'articolo è stato aggiunto/modificato 
      * correttamente, false altrimenti
      */
-    private function aggiungiArticolo(Articolo $articolo) {
+    private function aggiungiArticolo(ArticoloSession $articolo) {
         $pos = $this->posizione($articolo);
         
         if($pos > -1) {
@@ -319,7 +407,7 @@ class ClienteController extends BaseController {
      * @param Articolo $articolo
      * @return boolean true se l'articolo è stato rimosso, false altrimenti
      */
-    private function rimuoviArticolo(Articolo $articolo) {
+    private function rimuoviArticolo(ArticoloSession $articolo) {
         $pos = $this->posizione($articolo);
         
         if($pos > -1) {
@@ -333,10 +421,10 @@ class ClienteController extends BaseController {
     
     /**
      * Ricerca la posizione di un articolo nella lista
-     * @param Articolo $articolo l'articolo da cercare
+     * @param ArticoloSession $articolo l'articolo da cercare
      * @return int la posizione dell'esame se presente, -1 altrimenti
      */
-    private function posizione(Articolo $articolo) {
+    private function posizione(ArticoloSession $articolo) {
         foreach ($_SESSION[self::elenco_articoli] as $key => $value) {
             if($value->equals($articolo))
                 return $key;            

@@ -1,7 +1,7 @@
 div.selection {
     /*width: 310px;*/
     width: 100%;
-    margin-top: 11%;
+    /*margin-top: 11%;*/
     padding: 5%;
 
 /*    border: 1px solid #EA951C;
@@ -10,7 +10,6 @@ div.selection {
     border: 1px solid #C1C1C1;
     box-shadow: 0 0 7px 1px #C1C1C1;
     background: #F5F1ED;
-    color: #8D6464;
 }
 
 div.resume-cart {
@@ -51,48 +50,6 @@ div.resume-cart {
 .overflow { height: 107px; }
 
 
-
-/*table.shopping-cart {
-  border: 1px solid #ddd;
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-  table-layout: fixed;
-}
-
-thead {
-    background: rgba(255, 222, 173, 0.48);
-}
-
-tbody tr:hover {
-    background: rgba(211, 206, 185, 0.34);;
-}
-
-td a {
-    background: url(img/delete-icon.png);
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-}
-
-.shopping-cart th {
-    font-size: 1.3em;
-    padding: 0.3em;
-    width: 33.3%;
-    border: 1px solid #ddd;
-}
-
-.shopping-cart td {
-    padding: 0.3em;
-    width: 33.3%;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-
-.subtotal-price, .procedi {
-    text-align: right;
-}*/
 
 .total-price {
     margin-right: 68px;

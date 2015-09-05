@@ -344,11 +344,20 @@ class ViewDescriptor {
     
     private $breadcrumb;
     
+    private $titoloStep;
+    
     public function setBreadcrumb($bd) {
         $this->breadcrumb = $bd;
     } 
     public function getBreadcrumb() {
         return $this->breadcrumb;
+    } 
+    
+    public function setTitoloStep($title) {
+        $this->titoloStep = $title;
+    } 
+    public function getTitoloStep() {
+        return $this->titoloStep;
     } 
     
     

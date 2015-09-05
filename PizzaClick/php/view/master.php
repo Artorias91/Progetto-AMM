@@ -68,12 +68,20 @@
             }
             ?>            
         </div>
-        
         <div style="clear: both;"></div>
-        <footer>
-            <h1>footer</h1>
-        </footer>
-        
+        <div class="footer">
+            <div class="footer-content">
+            <ul>
+                <li>PizzaClick, Mattia Contini, 2015</li>
+                <li>
+                    <a class="html" href="http://validator.w3.org/check/referer">HTML Valid</a>                
+                </li>
+                <li>
+                    <a class="css" href="http://jigsaw.w3.org/css-validator/check/referer">CSS Valid</a>                
+                </li>
+            </ul>
+            </div>
+        </div>
     </div>
 
 </body>
