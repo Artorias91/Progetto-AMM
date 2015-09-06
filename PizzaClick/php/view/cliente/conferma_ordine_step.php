@@ -37,7 +37,7 @@
                     <td style="text-align: left; font-size: 8pt;"><?= $value->getPizza()->getIngredientiExtra() ?></td>
                     <td><?= $value->getSize() ?></td>
                     <td>&euro;<?= $value->getPrezzoArticolo() ?></td>
-                    <td style="padding-left: 2%;">
+                    <td>
                         <a href="cliente/conferma_ordine_step2?cmd=remove&key=<?=$key?>" alt="rimuovi">
                             <img alt="rimuovi" src="../img/remove-icon.png">
                         </a>

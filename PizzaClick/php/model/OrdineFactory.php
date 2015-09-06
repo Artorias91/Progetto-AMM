@@ -244,13 +244,13 @@ class OrdineFactory {
      * Crea e restitutisce un ordine 
      * a partire da una riga di DB
      * @param type $row
+     * @param boolean
      * @return Ordine
      */
-    public function creaOrdineDaArray($row){
+    public function creaOrdineDaArray($row, $flag = FALSE){
         $ordine = new Ordine();
         
-//        var_dump($row);
-        
+//        var_dump($row);        
         
         $ordine->setId($row['id']);
         $ordine->setDataConclusione($row['data_conclusione']);        
@@ -260,9 +260,101 @@ class OrdineFactory {
         $ordine->setArticoli(ArticoloFactory::instance()->
                 getListaArticoliPerIdOrdine($row['id']));
 
+        if($flag) {
+            $ordine->setClienteId($row['cliente_id']);
+        }
         
         return $ordine;
     }           
+
+    
+    
+    /**
+     * Chiude un ordine aggiornando il campo timestamp 'data_conclusione'
+     * @param $id ordine da aggiornare
+     * @return int il numero di righe modificate
+     */    
+    public function chiudiOrdinePerId($id) {
+        $intval = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        if (!isset($intval)) {
+            return null;
+        }
+        $query = "update ordini set data_conclusione = NOW() where id = ?";
+
+        $mysqli = Db::getInstance()->connectDb();
+        if (!isset($mysqli)) {
+            error_log("[salva] impossibile inizializzare il database");
+            $mysqli->close();
+            return 0;
+        }
+
+        $stmt = $mysqli->stmt_init();        
+        
+        
+        $stmt->prepare($query);
+        if (!$stmt) {
+            error_log("[chiudiOrdinePerId] impossibile" .
+                    " inizializzare il prepared statement");
+            
+            echo 'impossibile inizializzare il prepared statement';
+            
+            return 0;
+        }
+
+        if (!$stmt->bind_param('i', $intval)) {
+            error_log("[chiudiOrdinePerId] impossibile" .
+                    " effettuare il binding in input");
+            
+            echo 'impossibile effettuare il binding in input';
+            
+            return 0;
+        }
+
+        if (!$stmt->execute()) {
+            error_log("[chiudiOrdinePerId] impossibile eseguire lo statement");
+            
+            echo 'impossibile eseguire lo statement';
+            
+            return 0;
+        }
+        $n = $stmt->affected_rows;
+        
+        $stmt->close();
+        $mysqli->close();                
+        
+        return $n;
+    }
+        
+    
+    
+    /**
+     * Restituisce la lista degli ordini attivi presenti nel sistema
+     * @return array
+     */
+    public function &getListaOrdiniAttivi() {
+        $clienti = array();
+        $query = "select * from ordini where data_conclusione = 0";
+        
+        $mysqli = Db::getInstance()->connectDb();
+        if (!isset($mysqli)) {
+            error_log("[getListaOrdini] impossibile inizializzare il database");
+            $mysqli->close();
+            return $clienti;
+        }
+        $result = $mysqli->query($query);
+        if ($mysqli->errno > 0) {
+            error_log("[getListaOrdini] impossibile eseguire la query");
+            $mysqli->close();
+            return $clienti;
+        }
+
+        while ($row = $result->fetch_array()) {
+            $clienti[] = self::creaOrdineDaArray($row, TRUE);
+        }
+
+        return $clienti;
+    }
+    
     
 }
 

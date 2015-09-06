@@ -5,11 +5,12 @@
 <table class="ordini">
     <thead>
         <tr>
-            <th>n.</th>
+            <th>ID ordine</th>
+            <th>ID cliente</th>
             <th>Data ordine</th>
             <th style="width: 45%;">Articoli<br><span style="font-size: x-small;">[qt&agrave;, tipo, dimensione e prezzo]</span></th>
             <th>Subtotale<br><span style="font-size: small;">(EURO)</span></th>
-            <th>Stato</th>
+            <th>-</th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
         foreach ($ordini as $ordine) { ?>
         <tr <?= $i % 2 == 1 ? 'class="par"' : '' ?>>
             <td><?=$ordine->getId()?></td>
+            <td><?=$ordine->getClienteId()?></td>
             <td><?=$ordine->getDataCreazione()?></td>
             <td>
                 <ul>
@@ -33,7 +35,7 @@
                 </ul>
             </td>
             <td><?=$ordine->getSubtotale()?></td>
-            <td><?=$ordine->getDataConclusione()?></td>
+            <td><a href="admin/ordini_attivi?cmd=invia&id=<?= $ordine->getId() ?>">Invia</a></td>
                 
         </tr>
         <?php

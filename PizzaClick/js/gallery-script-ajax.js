@@ -8,7 +8,7 @@ function changePizza(pizza) {
     //description
     $('span.descriptPreviewImg').text(pizza.name + ": " + pizza.ingredients);
     //price
-    $('span.price').text("€" + pizza.price);
+    $('span.price').text("EURO " + pizza.price);
     
     //hidden input
     $("input#pizza-gallery").attr("value", pizza.id);

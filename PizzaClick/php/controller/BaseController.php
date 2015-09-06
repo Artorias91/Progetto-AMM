@@ -47,15 +47,10 @@ class BaseController {
                         $user = UserFactory::instance()->cercaUtentePerId($_SESSION[self::user], $_SESSION[self::role]);
                         
                         //nel caso si sia loggato il cliente
-                        if(isset($_SESSION[self::role]) && 
-                                $_SESSION[self::role] == Cliente::Cliente) {
-                            //carica le pizze da visualizzare sulla galleria
-//                            $listaPizzeConImg = PizzaFactory::instance()->getListaPizze(true);
-//                            reset($listaPizzeConImg);
-//                            $pizza = current($listaPizzeConImg);
-//                            $index = 0;
-//                            $vd->setSottoPagina('home');
+                        if($_SESSION[self::role] == Cliente::Cliente) {
                             header('Location: ' . Settings::getApplicationPath() . 'php/cliente/home');
+                        } else {
+                            header('Location: ' . Settings::getApplicationPath() . 'php/admin/home');                            
                         }
                     }
                     break;
@@ -148,8 +143,8 @@ class BaseController {
     protected function showLoginPage($vd) {
         // mostro la pagina di login
         $vd->setTitolo("Pizza Click! - login");
+        $vd->setHeaderFile(basename(__DIR__) . '/../view/login/login-header.php');        
         $vd->setContentFile(basename(__DIR__) . '/../view/login/login-content.php');
-        $vd->setHeaderFile(basename(__DIR__) . '/../view/admin/header.php');
         $vd->setSidebarFile(basename(__DIR__) . '/../view/login/login-sidebar.php');
    
     }

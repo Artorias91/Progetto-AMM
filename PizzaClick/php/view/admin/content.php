@@ -1,21 +1,19 @@
-<h3>Gestione clienti</h3>
-<ul>
-    <li>
-        <a href="admin/gestione_ordini">Visualizza elenco clienti</a>
-    </li>
-</ul>
-<h3>Gestione ordini</h3>
-<ul>
-    <li>
-        <a href="admin/gestione_ordini">Visualizza ordini correnti</a>
-    </li>
-    <li>
-        <a href="admin/gestione_ordini">Visualizza cronologia ordini</a>
-    </li>
-</ul>
-<h3>Gestione Menu</h3>
-<ul>
-    <li>
-        <a href="admin/gestione_ordini">Impostazioni select menu<br>e scroll gallery</a>
-    </li>
-</ul>
+<div class="sub">
+<?php
+switch ($vd->getSottoPagina()) {
+    case 'gestione_ordini':
+        include 'gestione_ordini.php';
+        break;
+    default:
+?>
+    <h3>Gestione ordini</h3>
+    <ul>
+        <li>
+            <a href="admin/gestione_ordini">Visualizza ordini attivi</a>
+        </li>
+    </ul>
+<?php
+        break;
+}
+?>
+</div>

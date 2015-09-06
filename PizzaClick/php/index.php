@@ -2,6 +2,7 @@
 
 include_once 'controller/BaseController.php';
 include_once 'controller/ClienteController.php';
+include_once 'controller/AdminController.php';
 
 date_default_timezone_set("Europe/Rome");
 
@@ -25,11 +26,14 @@ class FrontController {
                     }
                     $controller->handle_input($request);
                     break;
-//                case 'admin':
-//                    $controller = new AdminController;
-//                    $controller->handle_input($request);
-//                    break;
-
+                case "admin":
+                    $controller = new AdminController;
+                    if (isset($_SESSION[BaseController::role]) &&
+                        $_SESSION[BaseController::role] != User::Admin) {
+                            self::write403();
+                    }
+                    $controller->handle_input($request);
+                    break;
                 default:
                     self::write404();
                     break;

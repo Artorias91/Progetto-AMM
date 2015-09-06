@@ -24,6 +24,9 @@ class Ordine {
     
     private $articoli;
     
+    private $cliente_id;
+    
+    
     public function __construct() {}
     
    
@@ -47,6 +50,27 @@ class Ordine {
         }        
         return false;  
     }  
+    
+    /**
+     * Restituisce l'identificatore del cliente che ha eseguito l'ordine
+     * @return int
+     */
+    public function getClienteId() {
+        return $this->cliente_id;
+    }
+    
+    /**
+     * Imposta l'id del cliente che ha eseguito l'ordine
+     * @param int $id
+     */
+    public function setClienteId($id){
+        $intVal = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        if(isset($intVal)){
+            $this->cliente_id = $intVal;
+            return true;
+        }        
+        return false;  
+    }      
     
     public function getSubtotale() {
         return $this->subtotale;
@@ -81,7 +105,7 @@ class Ordine {
 
 
     public function setDataConclusione($timestamp) {
-        !isset($timestamp) ? $this->data_conclusione = 'concluso' : $this->data_conclusione = 'in corso';        
+        !($timestamp === '0000-00-00 00:00:00') ? $this->data_conclusione = 'concluso' : $this->data_conclusione = 'in corso';        
     }    
     
     public function setArticoli($array) {
