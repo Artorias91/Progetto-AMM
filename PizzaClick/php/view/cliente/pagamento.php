@@ -1,4 +1,4 @@
-<form method="post" action="cliente/impostazioni<?= '?'.$vd->scriviToken()?>">
+<form method="post" action="cliente/impostazioni">
     <input type="hidden" name="cmd" value="v_pagamento"/>
     <label for="carta">Carta</label>
     <select name="carta" id="carta">
@@ -9,5 +9,5 @@
         </option>
     <?php } ?>       
     </select>
-    <input class="modifica" style="margin: 0;" type="submit" value="Visualizza"/>
+    <input style="margin: 0;" type="submit" value="Visualizza"/>
 </form>

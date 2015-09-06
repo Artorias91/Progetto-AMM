@@ -256,9 +256,12 @@ class ClienteController extends BaseController {
                             }
 //                            $this->creaFeedbackUtente($vd, array(), array(), '');
                             $carta = $pagamenti[$intVal - 1];
+                            $vd->setSottoPagina('visualizza_pagamento');                        
+                        } else {
+//                            echo 'problema';
+                            $vd->setSottoPagina('pagamento');                        
                         }          
                         
-                        $vd->setSottoPagina('visualizza_pagamento');
                         $vd->setBreadcrumb("Visualizza i tuoi metodi di pagamento");                            
                         $this->showHomeUser($vd);                        
                         break;

@@ -346,7 +346,9 @@ fieldset.scadenza > label {
     margin-left: 5%;
 }
 
-
+fieldset select {
+    width: auto;
+}
 
 table {
     border-collapse: collapse;
@@ -445,16 +447,18 @@ table.account td > ul, table.ordini td > ul {
 
 
 .html {
-  background: url('../img/html.gif') no-repeat;
+    background: url('../img/html.gif') no-repeat;
+    padding-left: 53px;    
 }
 
 .css {
-  background: url('../img/css.gif') no-repeat;  
+    background: url('../img/css.gif') no-repeat;  
+    padding-left: 45px;    
 }
 
-.html, .css {
-    background-position: left;
-    padding-left: 55px;    
+.html:hover, .css:hover {
+    font-weight: normal;
+    color: gainsboro;
 }
 
 .footer ul {
