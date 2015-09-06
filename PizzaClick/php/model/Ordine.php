@@ -105,7 +105,7 @@ class Ordine {
 
 
     public function setDataConclusione($timestamp) {
-        !($timestamp === '0000-00-00 00:00:00') ? $this->data_conclusione = 'concluso' : $this->data_conclusione = 'in corso';        
+        !($timestamp === '0000-00-00 00:00:00') ? $this->data_conclusione = 'spedito' : $this->data_conclusione = 'in corso';        
     }    
     
     public function setArticoli($array) {
