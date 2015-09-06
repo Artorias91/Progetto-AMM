@@ -1,4 +1,4 @@
-<form method="post" action="cliente/impostazioni">
+<form method="post" action="cliente/visualizza_pagamento">
     <input type="hidden" name="cmd" value="v_pagamento"/>
     <label for="carta">Carta</label>
     <select name="carta" id="carta">

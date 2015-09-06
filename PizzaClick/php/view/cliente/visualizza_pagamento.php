@@ -1,4 +1,4 @@
-<form method="get" action="cliente/impostazioni<?= '?'.$vd->scriviToken()?>">
+<form method="get" action="cliente/visualizza_pagamento">
     <label for="titolareCarta">Nome del titolare della carta</label>
     <input class="text" readonly required placeholder="Nome e cognome" name="titolareCarta" id="titolareCarta"
            value="<?= $carta->getTitolareCarta() ?>"/><br>
@@ -29,37 +29,4 @@
         <?php } ?>            
         </select>            
     </fieldset>
-    <!--<fieldset>
-        <legend>Indirizzo associato</legend>
-        <label for="destinatario">Destinatario</label>
-        <input required placeholder="Nome e cognome" name="destinatario" id="destinatario" 
-               value="<?= $carta->
-                getIndirizzo()->getDestinatario() ?>"/>
-        <br>
-        <label for="indirizzo">Indirizzo</label>
-        <input required placeholder="Via e numero civico" name="indirizzo" id="indirizzo" 
-               value="<?= $carta->
-                getIndirizzo()->getNomeIndirizzo() ?>"/>
-        <br>        
-        <label for="citta">Citta</label>
-        <input required name="citta" id="citta" 
-               value="<?= $carta->
-                getIndirizzo()->getCitta() ?>"/>
-        <br>
-        <label for="provincia">Provincia</label>
-        <input required name="provincia" id="provincia" 
-               value="<?= $carta->
-                getIndirizzo()->getProvincia() ?>"/>
-        <br>
-        <label for="cap">CAP</label>
-        <input required name="cap" id="cap" 
-               value="<?= $carta->
-                getIndirizzo()->getCap() ?>"/>
-        <br>
-        <label for="telefono">Telefono</label>
-        <input required maxlength="10" name="telefono" id="telefono" 
-               value="<?= $carta->
-                getIndirizzo()->getTelefono() ?>"/>
-        <br>                    
-    </fieldset>-->
 </form>
