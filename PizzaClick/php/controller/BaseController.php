@@ -182,73 +182,97 @@ class BaseController {
     }    
 
     
+//    /**
+//     * Crea un messaggio di feedback per l'utente 
+//     * @param ViewDescriptor $vd il descrittore della pagina
+//     * @param array $msg_e lista di messaggi di errore
+//     * @param array $msg_c lista di messaggi di conferma
+//     * @param string $ifMsg il messaggio da mostrare nel caso in cui
+//     * non siano stati rilevati errori o apportate modifiche
+//     */
+//    protected function creaFeedbackUtente($vd, &$msg_e, &$msg_c, &$ifMsg) {
+//        if (count($msg_e) > 0) {
+//            // ci sono messaggi di errore nell'array,
+//            // qualcosa e' andato storto...
+//            $error = "Sono stati riscontrati i seguenti problemi:\n<ul>\n";
+//            foreach ($msg_e as $m) {
+//                $error = $error . $m . "\n";
+//            }
+//            // imposto il messaggio di errore
+//            $vd->setMessaggioErrore($error);
+//        }
+//        if(count($msg_c) > 0){
+//            // ci sono messaggi di conferma nell'array,
+//            // quindi mostro le modifiche applicate
+//            $ok = "Sono state applicate le seguenti modifiche:\n<ul>\n";
+//            foreach ($msg_c as $m) {
+//                $ok = $ok . $m . "\n";
+//            }
+//            $vd->setMessaggioConferma($ok);
+//        }
+//        //nessun errore rilevato e nessuna modifica applicata
+//        if(empty($msg_e) && empty($msg_c)) {
+//            $ifMsg = 'Nessuna modifica applicata:' .
+//            "<br><span style=\"font-size: 8pt;\">$ifMsg</span></li>";
+//            $vd->setMessaggioErrore($ifMsg);
+//        }
+//    }        
     /**
      * Crea un messaggio di feedback per l'utente 
+     * @param array $msg lista di messaggi di errore
      * @param ViewDescriptor $vd il descrittore della pagina
-     * @param array $msg_e lista di messaggi di errore
-     * @param array $msg_c lista di messaggi di conferma
-     * @param string $ifMsg il messaggio da mostrare nel caso in cui
-     * non siano stati rilevati errori o apportate modifiche
+     * @param string $okMsg il messaggio da mostrare nel caso non ci siano errori
      */
-    protected function creaFeedbackUtente($vd, &$msg_e, &$msg_c, &$ifMsg) {
-        if (count($msg_e) > 0) {
+    protected function creaFeedbackUtente(&$msg, $vd, $okMsg) {
+        if (count($msg) > 0) {
             // ci sono messaggi di errore nell'array,
             // qualcosa e' andato storto...
-            $error = "Sono stati riscontrati i seguenti problemi:\n<ul>\n";
-            foreach ($msg_e as $m) {
+            $error = "Si sono verificati i seguenti errori:\n<ul>\n";
+            foreach ($msg as $m) {
                 $error = $error . $m . "\n";
             }
             // imposto il messaggio di errore
             $vd->setMessaggioErrore($error);
+        } else {
+            // non ci sono messaggi di errore, la procedura e' andata
+            // quindi a buon fine, mostro un messaggio di conferma
+            $vd->setMessaggioConferma($okMsg);
         }
-        if(count($msg_c) > 0){
-            // ci sono messaggi di conferma nell'array,
-            // quindi mostro le modifiche applicate
-            $ok = "Sono state applicate le seguenti modifiche:\n<ul>\n";
-            foreach ($msg_c as $m) {
-                $ok = $ok . $m . "\n";
+    }
+    
+    protected function aggiornaInfoBase($user, &$request, &$msg) {
+        $this->aggiornaEmail($user, $request, $msg);
+        $this->aggiornaUsername($user, $request, $msg);
+        
+        if(count($msg) == 0) {
+            if(UserFactory::instance()->salva($user) != 1) {
+                $msg[] = '<li>Salvataggio non riuscito</li>';
             }
-            $vd->setMessaggioConferma($ok);
-        }
-        //nessun errore rilevato e nessuna modifica applicata
-        if(empty($msg_e) && empty($msg_c)) {
-            $ifMsg = 'Nessuna modifica applicata:' .
-            "<br><span style=\"font-size: 8pt;\">$ifMsg</span></li>";
-            $vd->setMessaggioErrore($ifMsg);
-        }
-    }        
+        }        
+    }
     
     
     /**
      * Aggiorno lo username di un utente (comune a Clienti e Admins)
      * @param User $user l'utente da aggiornare
      * @param array $request la richiesta http da gestire
-     * @param array $msg_e riferimento ad un array da riempire con eventuali errori
-     * @param array $msg_c riferimento ad un array da riempire con eventuali msg di conferma
+     * @param array $msg riferimento ad un array da riempire con eventuali errori
      * messaggi d'errore
      */    
-    public function aggiornaUsername($user, &$request, &$msg_e, &$msg_c) {
+    protected function aggiornaUsername($user, &$request, &$msg) {
         if(isset($request['username'])) {
             if(! UserFactory::instance()->checkIfUsernameIsAlreadyUsed($request['username'], $user)) {
-                if($user->getUsername() == $request['username']) {
-                    return;//$msg_e[] = '<li>Lo username inserito &egrave; gi&agrave; in uso.</li>';
-                } elseif(!$user->setUsername($request['username'])) {
-                    $msg_e[] = '<li>Lo username inserito non è valido:' .
+                if(!$user->setUsername($request['username'])) {
+                    $msg[] = '<li>Lo username inserito non &egrave; valido:' .
                             "<br><span style=\"font-size: 8pt;\">puoi inserire solo lettere " . 
                             '(devono essere almeno 5)</span></li>';
-                } else {
-                    $msg_c[] = '<li>Lo username inserito &egrave; stato aggiornato</li>';
-                }                
+                }           
             } else {
-                $msg_e[] = '<li>Spiacente, lo username inserito non è disponibile</li>';
+                $msg[] = '<li>Lo username inserito non &egrave; disponibile</li>';
             }            
         }
-        if(empty($msg_e) && ! empty($msg_c)) {
-            if(UserFactory::instance()->salva($user) != 1) {
-                $msg_e[] = '<li>Salvataggio non riuscito</li>';
-            }
-        }
-    }
+    }    
+    
     
    /**
      * Aggiorno l'indirizzo email di un utente (comune a Clienti e Admins)
@@ -258,82 +282,43 @@ class BaseController {
      * @param array $msg_c riferimento ad un array da riempire con eventuali msg di conferma
      * messaggi d'errore
      */
-    protected function aggiornaEmail($user, &$request, &$msg_e, &$msg_c) {
+    protected function aggiornaEmail($user, &$request, &$msg) {
         if (isset($request['email'])) {
-            if($user->getEmail() == $request['email']) {
-                return;//$msg_e[] = '<li>L\'indirizzo email inserito &egrave; gi&agrave; in uso.</li>';
-            } elseif (!$user->setEmail($request['email'])) {
-                $msg_e[] = '<li>L\'indirizzo email specificato non &egrave; valido</li>';
-            } else {
-                $msg_c[] = '<li>L\'indirizzo email &egrave; stato aggiornato</li>';
+            if(!$user->setEmail($request['email'])) {
+                $msg[] = '<li>L\'indirizzo email inserito non è valido.</li>';
             }
         }
-        // salviamo i dati se non ci sono stati errori
-        if (empty($msg_e) && ! empty($msg_c)) {
-            if (UserFactory::instance()->salva($user) != 1) {
-                $msg_e[] = '<li>Salvataggio non riuscito</li>';
-            }
-        }
-    }    
-   /**
-     * Aggiorno il numero di telefono di un utente (comune a Clienti e Admins)
-     * @param User $user l'utente da aggiornare
-     * @param array $request la richiesta http da gestire
-     * @param array $msg_e riferimento ad un array da riempire con eventuali errori
-     * @param array $msg_c riferimento ad un array da riempire con eventuali msg di conferma
-     * messaggi d'errore
-     */
-    protected function aggiornaTelefono($user, &$request, &$msg_e, &$msg_c) {
-        if (isset($request['telefono'])) {
-            if($user->getTelefono() == $request['telefono']) {
-                return;//$msg_e[] = '<li>L\'indirizzo email inserito &egrave; gi&agrave; in uso.</li>';
-            } elseif (!$user->setTelefono($request['telefono'])) {
-                $msg_e[] = '<li>Il numero di telefono specificato non &egrave; valido</li>';
-            } else {
-                $msg_c[] = '<li>Il numero di telefono &egrave; stato aggiornato</li>';
-            }
-        }        
-        // salviamo i dati se non ci sono stati errori
-        if (empty($msg_e) && ! empty($msg_c)) {
-            if (UserFactory::instance()->salva($user) != 1) {
-                $msg_e[] = '<li>Salvataggio non riuscito</li>';
-            }
-        }
-    }        
-
+    }
+    
     /**
      * Aggiorno la password di un utente (comune a Clienti e Admins)
      * @param User $user l'utente da aggiornare
      * @param array $request la richiesta http da gestire
-     * @param array $msg_e riferimento ad un array da riempire con eventuali errori
-     * @param array $msg_c riferimento ad un array da riempire con eventuali msg di conferma
+     * @param array $msg riferimento ad un array da riempire con eventuali errori
      * messaggi d'errore
      */
-    protected function aggiornaPassword($user, &$request, &$msg_e, &$msg_c) {
+    protected function aggiornaPassword($user, &$request, &$msg) {
         if (isset($request['oldPass']) && isset($request['pass1']) && isset($request['pass2'])) {
             if(strcmp($request['oldPass'], $user->getPassword()) == 0) {
                 if (strcmp($request['pass1'], $request['pass2']) == 0) {
                     if (!$user->setPassword($request['pass1'])) {
-                        $msg_e[] = '<li>Il formato della password non &egrave; corretto</li>';
-                    } else {
-                        $msg_c[] = '<li>La password &egrave; stata cambiata</li>';                
+                        $msg[] = '<li>Il formato della password non &egrave; corretto</li>';
                     }
                 } else {
-                    $msg_e[] = '<li>Le due password non coincidono</li>';
+                    $msg[] = '<li>Le due password non coincidono</li>';
                 }                
             } else {
-                $msg_e[] = '<li>La password attuale non &egrave; corretta</li>';                
+                $msg[] = '<li>La password attuale non &egrave; corretta</li>';                
             }
         } 
         
         // salviamo i dati se non ci sono stati errori
-        if (empty($msg_e) && ! empty($msg_c)) {
+        if (count($msg) == 0) {
             if (UserFactory::instance()->salva($user) != 1) {
                 $msg[] = '<li>Salvataggio non riuscito</li>';
             }
         }
     }
-    
     
     
 }

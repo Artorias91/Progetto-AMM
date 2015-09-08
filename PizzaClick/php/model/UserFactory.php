@@ -291,7 +291,7 @@ class UserFactory {
         }
 
         $stmt = $mysqli->stmt_init();
-        $count = 0;
+//        $count = 0;
         switch ($user->getRuolo()) {
             case User::Cliente:
                 $count = $this->salvaCliente($user, $stmt);
@@ -303,19 +303,19 @@ class UserFactory {
         $stmt->close();
         $mysqli->close();
         
-        echo 'username:' . $user->getUsername() . '<br>';
-        echo 'count:' . $count . '<br>';
+//        echo 'username:' . $user->getUsername() . '<br>';
+//        echo 'count:' . $count . '<br>';
         
         return $count;
     }
 
     /**
      * Rende persistenti le modifiche all'anagrafica di un cliente sul db
-     * @param Cliente $s il cliente considerato
+     * @param Cliente $c il cliente considerato
      * @param mysqli_stmt $stmt un prepared statement
      * @return int il numero di righe modificate
      */
-    private function salvaCliente(Cliente $s, mysqli_stmt $stmt) {
+    private function salvaCliente(Cliente $c, mysqli_stmt $stmt) {
         $query = " update clienti set 
                     username = ?,
                     password = ?,
@@ -336,12 +336,12 @@ class UserFactory {
         }
 
         if (!$stmt->bind_param('sssssi', 
-                $s->getUsername(), 
-                $s->getPassword(),
-                $s->getEmail(), 
-                $s->getNome(), 
-                $s->getCognome(), 
-                $s->getId())) {
+                $c->getUsername(), 
+                $c->getPassword(),
+                $c->getEmail(), 
+                $c->getNome(), 
+                $c->getCognome(), 
+                $c->getId())) {
             error_log("[salvaCliente] impossibile" .
                     " effettuare il binding in input");
             
@@ -361,21 +361,16 @@ class UserFactory {
             return 0;
         }
         
-//        echo 'affected_rows: ' . $stmt->affected_rows . '<br>';
-
-//        if($stmt->affected_rows == 0)
-//            return 1;
-        
         return $stmt->affected_rows;
     }
     
     /**
      * Rende persistenti le modifiche all'anagrafica di un admin sul db
-     * @param Admin $d l'admin considerato
+     * @param Admin $a l'admin considerato
      * @param mysqli_stmt $stmt un prepared statement
      * @return int il numero di righe modificate
      */
-    private function salvaAdmin(Admin $d, mysqli_stmt $stmt) {
+    private function salvaAdmin(Admin $a, mysqli_stmt $stmt) {
         $query = " update admins set 
                     password = ?,
                     nome = ?,
@@ -391,11 +386,11 @@ class UserFactory {
         }
 
         if (!$stmt->bind_param('ssssi', 
-                $d->getPassword(), 
-                $d->getNome(), 
-                $d->getCognome(), 
-                $d->getEmail(), 
-                $d->getId())) {
+                $a->getPassword(), 
+                $a->getNome(), 
+                $a->getCognome(), 
+                $a->getEmail(), 
+                $a->getId())) {
             error_log("[salvaAdmin] impossibile" .
                     " effettuare il binding in input");
             return 0;

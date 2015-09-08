@@ -59,13 +59,17 @@ class AdminController extends BaseController {
                         $this->logout($vd);
                         break;
                     case 'invia':
-                        if(isset($request['id'])) {
-                            OrdineFactory::instance()->chiudiOrdinePerId($request['id']);
-                        } 
-//                        else {
-                            //mostra msg errore DA INSERIRE anche in ClienteController
-//                        }
+                        $msg = array();
+                        
                         $ordini = OrdineFactory::instance()->getListaOrdiniAttivi();
+                        
+                        if(isset($request['id'])) {
+                            if(OrdineFactory::instance()->chiudiOrdinePerId($request['id']) != 1) {
+                                $msg[] = '<li>L\'ordine #' . $request['id'] .  ' non &egrave; presente nel DB</li>';
+                            }
+                        } 
+                        
+                        $this->creaFeedbackUtente($msg, $vd, 'Ordine #' . $request['id'] . ' inviato');
                         
                         $vd->setSottoPagina('gestione_ordini');                        
                         $this->showHomeAdmin($vd);

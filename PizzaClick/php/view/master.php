@@ -38,10 +38,9 @@
 
             <div class="content">
                 <?php
-                    $content = $vd->getContentFile();
-                    require "$content";
-                ?>
-                <?php
+                $content = $vd->getContentFile();
+                require "$content";
+                
                 if ($vd->getMessaggioErrore() != null) {
                     ?>
                     <div class="error">
@@ -66,7 +65,7 @@
                     </div>
                     <?php
                 }
-                ?>            
+                ?>
             </div>
             <div style="clear: both;"></div>
             <div class="footer">

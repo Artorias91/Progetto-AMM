@@ -83,7 +83,7 @@ class PagamentoFactory {
             return null;
         }
 
-        $pagamenti =  self::caricaPagamentiDaStmt($stmt);
+        $pagamenti =  self::caricaPagamentiDaStmt($stmt, 2);
 
         $mysqli->close();
         
@@ -127,7 +127,7 @@ class PagamentoFactory {
             return null;
         }
 
-        $pagamento =  self::caricaPagamentiDaStmt($stmt)[0];
+        $pagamento =  self::caricaPagamentiDaStmt($stmt, 1);
         
 //        var_dump($pagamento);
 
@@ -142,8 +142,7 @@ class PagamentoFactory {
      * @param mysqli_stmt $stmt
      * @return null
      */
-    public function &caricaPagamentiDaStmt(mysqli_stmt $stmt) {
-        $pagamenti = array();
+    public function caricaPagamentiDaStmt(mysqli_stmt $stmt, $flag = 1) {
         if (!$stmt->execute()) {
             error_log("[caricaPagamentiDaStmt] impossibile" .
                     " eseguire lo statement");
@@ -165,14 +164,24 @@ class PagamentoFactory {
                     " effettuare il binding in output");
             return null;
         }
+        
+        if($flag == 1) {
+            if (!$stmt->fetch()) {
+                return null;
+            }
+            $stmt->close();
+            return self::creaPagamentoDaArray($row);            
+        } 
+        else {
+            $pagamenti = array();
+            
+            while ($stmt->fetch()) {
+                $pagamenti[] = self::creaPagamentoDaArray($row);
+            }
+            $stmt->close();
 
-        while ($stmt->fetch()) {
-            $pagamenti[] = self::creaPagamentoDaArray($row);
+            return $pagamenti;            
         }
-
-        $stmt->close();
-
-        return $pagamenti;
     }
 
     /**

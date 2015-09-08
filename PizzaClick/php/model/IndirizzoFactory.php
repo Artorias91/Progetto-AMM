@@ -31,41 +31,6 @@ class IndirizzoFactory {
         return self::$singleton;
     }
 
-
-    /**
-     * Carica un indirizzo tramite id
-     * (non fornito da input utente)
-     * @param int $id
-     * @return \Indirizzo altrimenti null
-     */
-//    public function caricaIndirizzoPerId($id) {
-//        $intval = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-//        if (!isset($intval)) {
-//            return null;
-//        }
-//        $query = "select * from indirizzi where id = $id";
-//        
-//        $mysqli = Db::getInstance()->connectDb();
-//        
-//        if (!isset($mysqli)) {
-//            error_log("[caricaIndirizzoPerId] impossibile inizializzare il database");
-//            $mysqli->close();
-//            return null;
-//        }
-//        $result = $mysqli->query($query);
-//        if ($mysqli->errno > 0) {
-//            error_log("[caricaIndirizzoPerId] impossibile eseguire la query");
-//            $mysqli->close();
-//            return null;
-//        }
-//        
-//        $row = $result->fetch_array();
-//        $indirizzo = self::creaIndirizzoDaArray($row);
-//
-//        $mysqli->close();
-//        
-//        return $indirizzo;
-//    }
     
     /**
      * Cerca un indirizzo per id 
@@ -167,7 +132,74 @@ class IndirizzoFactory {
 //        echo var_dump($indirizzo);
         return $indirizzo;
     }
+
+    /**
+     * Salva i dati relativi ad un utente sul db
+     * @param User $user
+     * @return il numero di righe modificate
+     */
+    public function salvaIndirizzo(Indirizzo $indirizzo) {
+        $mysqli = Db::getInstance()->connectDb();
+        if (!isset($mysqli)) {
+            error_log("[salvaIndirizzo] impossibile inizializzare il database");
+            $mysqli->close();
+            return 0;
+        }
+        $stmt = $mysqli->stmt_init();
+
+        $query = " update indirizzi set 
+                    destinatario = ?,
+                    via_num = ?,
+                    citta = ?,
+                    provincia = ?,
+                    cap = ?,
+                    telefono = ?
+                    where indirizzi.id = ?
+                 ";
+        $stmt->prepare($query);
+        if (!$stmt) {
+            error_log("[salvaIndirizzo] impossibile" .
+                    " inizializzare il prepared statement");
+            
+            echo 'impossibile inizializzare il prepared statement';
+            
+            return 0;
+        }
+
+        if (!$stmt->bind_param('ssssssi',
+                $indirizzo->getDestinatario(),
+                $indirizzo->getNomeIndirizzo(),
+                $indirizzo->getCitta(),
+                $indirizzo->getProvincia(),
+                $indirizzo->getCap(),
+                $indirizzo->getTelefono(),
+                $indirizzo->getId())) {
+            error_log("[salvaIndirizzo] impossibile" .
+                    " effettuare il binding in input");
+            
+            echo 'impossibile effettuare il binding in input';
+            
+            return 0;
+        }
+
+        if (!$stmt->execute()) {
+            error_log("[salvaIndirizzo] impossibile" .
+                    " eseguire lo statement");
+            
+            echo 'impossibile eseguire lo statement';
+            
+            return 0;
+        }
         
+        $n = $stmt->affected_rows;
+        
+        
+        $stmt->close();
+        $mysqli->close();
+        
+        return $n;
+    }
+    
     
 }
 

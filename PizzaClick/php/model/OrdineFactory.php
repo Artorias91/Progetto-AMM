@@ -210,7 +210,7 @@ class OrdineFactory {
      * @param mysqli_stmt $stmt
      * @return null
      */
-    public function &caricaOrdiniDaStmt(mysqli_stmt $stmt) {
+    public function caricaOrdiniDaStmt(mysqli_stmt $stmt) {
         $ordini = array();
         if (!$stmt->execute()) {
             error_log("[caricaOrdiniDaStmt] impossibile" .

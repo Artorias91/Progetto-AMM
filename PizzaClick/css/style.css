@@ -488,3 +488,41 @@ table.account td > ul, table.ordini td > ul {
 select {
     width: 150px;
 }
+
+
+
+/* Msg di errore e conferma */
+.confirm {
+    width: 65%;
+    background-color: #c7edce;
+    border: 1.5px solid #36956e;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.confirm div {
+    margin: 0px;
+    background: url('../img/ok.png') no-repeat left top;
+    min-height: 32px;
+    padding-left: 15%;
+}
+
+.error {
+    width: 65%;
+    background-color: #f5a5a5;
+    border: 1.5px solid #9e1616;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.error div {
+    margin: 0px;
+    background: url('../img/no.png') no-repeat left top;
+    min-height: 32px;
+    padding-left: 15%;
+}
+
+.error ul, .confirm ul {
+    margin: 0;
+    list-style-type: square;
+}

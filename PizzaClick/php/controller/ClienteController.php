@@ -145,28 +145,38 @@ class ClienteController extends BaseController {
                 switch ($request["cmd"]) {
                     //salvataggio permanente elenco articoli
                     case 'ordina':
-//                        $msg = array();
-//                        $msgb = array();
-//                        $msgc = array();                        
+                        $msg = array();
+                    
                         
                         if(!empty($_SESSION[self::elenco_articoli])) {
                             if(isset($request['carta'])) {
                                 $carta = intval($request['carta']);
 //                                file_put_contents('text.txt', "ordinannana");
-                                $pagamento = PagamentoFactory::instance()->cercaPagamentoPerId($carta);                        
-                                if($pagamento->getSaldo() < $this->getSubTotale(true)) {
-                                    $msg[] = '<li>Spiacente. Il credito non &egrave; sufficiente</li>';
+                                
+                                $pagamento = PagamentoFactory::instance()->
+                                        cercaPagamentoPerId($carta);
+                                
+                                if(!isset($pagamento)) {
+                                    $msg[] = 'Il metodo di pagamento inserito non esiste nel DB';
                                     $vd->setTitoloStep('Passo 3: seleziona metodo di pagamento');
-                                    $vd->setSottoPagina('conferma_ordine_step3');
-                                    
+                                    $vd->setSottoPagina('conferma_ordine_step3');                                    
                                 } else {
-                                    OrdineFactory::instance()->
-                                            salvaOrdine($_SESSION[self::elenco_articoli], $user->getId(), $this->getSubTotale());
-                                    $_SESSION[self::elenco_articoli] = array();
-                                    
-                                    $vd->setSottoPagina('home');                                    
-                                }
+                                    if($pagamento->getSaldo() < $this->getSubTotale(true)) {
+                                        $msg[] = '<li>Spiacente. Il credito non &egrave; sufficiente</li>';
+                                        $vd->setTitoloStep('Passo 3: seleziona metodo di pagamento');
+                                        $vd->setSottoPagina('conferma_ordine_step3');
+
+                                    } else {
+                                        OrdineFactory::instance()->
+                                                salvaOrdine($_SESSION[self::elenco_articoli], $user->getId(), $this->getSubTotale());
+                                        $_SESSION[self::elenco_articoli] = array();
+
+                                        $vd->setSottoPagina('home');                                    
+                                    }                                    
+                                }                                
                             }
+                            
+                            $this->creaFeedbackUtente($msg, $vd, 'Ordine inviato');
                         }
 //                        $this->creaFeedbackUtente($vd, $msg, $msgb, $msgc);
                         
@@ -204,12 +214,6 @@ class ClienteController extends BaseController {
                      * ovvero una quantità di pizze di un determinato tipo e di una certa dimensione
                      */
                     case 'add':
-//                        file_put_contents('text.txt', $request['pizza-gallery'], FILE_APPEND);
-//                        file_put_contents('php/text.txt', "\r\n", FILE_APPEND);
-//                        file_put_contents('php/text.txt', $request['quantity'], FILE_APPEND);
-//                        file_put_contents('php/text.txt', "\r\n", FILE_APPEND);
-//                        file_put_contents('php/text.txt', $request['size'], FILE_APPEND);
-
                         //controlla la provenienza della richiesta: form's sidebar ...
                         if(isset($request['pizza-selection']) && isset($request['size']) && isset($request['quantity'])) {
                             
@@ -265,37 +269,34 @@ class ClienteController extends BaseController {
                         $vd->setBreadcrumb("Visualizza i tuoi metodi di pagamento");                            
                         $this->showHomeUser($vd);                        
                         break;
-                    
-                    case 'password':
-                        $msg_errori = array();
-                        $msg_conferme = array();
-                        $ifMsg = "cambia la password";
+                    case 'aggiorna_indirizzo':
+                        $msg = array();                       
+                        $this->aggiornaIndirizzo($user, $request, $msg);
+                        $this->creaFeedbackUtente($msg, $vd, "Indirizzo di consegna aggiornato");
+                        $this->showHomeUser($vd);                        
                         
-                        $this->aggiornaPassword($user, $request, $msg_errori, $msg_conferme);
-                        $this->creaFeedbackUtente($vd, $msg_errori, $msg_conferme, $ifMsg);                        
+                        break;
+                    case 'aggiorna_password':
+                        $msg = array();
+                        
+                        $this->aggiornaPassword($user, $request, $msg);
+                        $this->creaFeedbackUtente($msg, $vd, 'Password aggiornata');                        
                         
                         $vd->setSottoPagina('password');
                         $vd->setBreadcrumb("Modifica password");
                         
                         $this->showHomeUser($vd);                        
                         break;
-                    case 'base':
-                        $msg_errori = array();
-                        $msg_conferme = array();
-                        $ifMsg = "aggiorna username o e-mail";
-                        
-                        $this->aggiornaUsername($user, $request, $msg_errori, $msg_conferme);
-
-                        $this->aggiornaEmail($user, $request, $msg_errori, $msg_conferme);
-                        
-//                        $this->aggiornaTelefono($user, $request, $msg_errori, $msg_conferme);
-                        
-                        $this->creaFeedbackUtente($vd, $msg_errori, $msg_conferme, $ifMsg);                       
+                    case 'aggiorna_info_base':
+                        $msg = array();
                         
                         $vd->setSottoPagina('base');
                         $vd->setBreadcrumb("Modifica username o e-mail");
-
+                         
+                        $this->aggiornaInfoBase($user, $request, $msg);
                         
+                        $this->creaFeedbackUtente($msg, $vd, 'Username/e-mail sono stati aggiornati');                       
+                                               
                         $this->showHomeUser($vd);
 
                         break;
@@ -434,6 +435,59 @@ class ClienteController extends BaseController {
         }
         return -1;
     }    
+
+    /**
+     * Aggiorno l'indirizzo di un utente (comune a Studente e Docente)
+     * @param User $user l'utente da aggiornare
+     * @param array $request la richiesta http da gestire
+     * @param array $msg riferimento ad un array da riempire con eventuali
+     * messaggi d'errore
+     */
+    protected function aggiornaIndirizzo(Cliente $user, &$request, &$msg) {
+        if (isset($request['destinatario'])) {
+            if (!$user->getIndirizzo()->
+                    setDestinatario($request['destinatario'])) {
+                $msg[] = '<li>Il formato del numero civico non &egrave; corretto</li>';
+            }
+        }
+        if (isset($request['indirizzo'])) {
+            if (!$user->getIndirizzo()->
+                    setNomeIndirizzo($request['indirizzo'])) {
+                $msg[] = '<li>L\'indirizzo specificato non &egrave; corretto</li>';
+            }
+        }
+        if (isset($request['citta'])) {
+            if (!$user->getIndirizzo()->
+                    setCitta($request['citta'])) {
+                $msg[] = '<li>La citt&agrave; specificata non &egrave; corretta</li>';
+            }
+        }
+        if (isset($request['provincia'])) {
+            if (!$user->getIndirizzo()->
+                    setProvincia($request['provincia'])) {
+                $msg[] = '<li>La provincia specificata &egrave; corretta</li>';
+            }
+        }
+        if (isset($request['cap'])) {
+            if (!$user->getIndirizzo()->
+                    setCap($request['cap'])) {
+                $msg[] = '<li>Il CAP specificato non &egrave; corretto</li>';
+            }
+        }
+        if (isset($request['telefono'])) {
+            if (!$user->getIndirizzo()->
+                    setTelefono($request['telefono'])) {
+                $msg[] = '<li>Il numero di telefono specificato non &egrave; corretto</li>';
+            }
+        }        
+        // salviamo i dati se non ci sono stati errori
+        if (count($msg) == 0) {
+            if (IndirizzoFactory::instance()->salvaIndirizzo($user->getIndirizzo()) != 1) {
+                $msg[] = '<li>Salvataggio non riuscito</li>';
+            }
+        }
+    }
+    
     
 }
 
