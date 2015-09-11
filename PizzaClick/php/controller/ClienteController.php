@@ -151,26 +151,24 @@ class ClienteController extends BaseController {
                         if(!empty($_SESSION[self::elenco_articoli])) {
                             if(isset($request['carta'])) {
                                 $carta = intval($request['carta']);
-//                                file_put_contents('text.txt', "ordinannana");
                                 
                                 $pagamento = PagamentoFactory::instance()->
                                         cercaPagamentoPerId($carta);
                                 
                                 if(!isset($pagamento)) {
-                                    $msg[] = 'Il metodo di pagamento inserito non esiste nel DB';
+                                    $msg[] = 'Il metodo di pagamento inserito non &egrave; valido';
                                     $vd->setTitoloStep('Passo 3: seleziona metodo di pagamento');
                                     $vd->setSottoPagina('conferma_ordine_step3');                                    
                                 } else {
-                                    if($pagamento->getSaldo() < $this->getSubTotale(true)) {
-                                        $msg[] = '<li>Spiacente. Il credito non &egrave; sufficiente</li>';
+                                    if ( ! OrdineFactory::instance()->
+                                            salvaOrdine($_SESSION[self::elenco_articoli], 
+                                                    $user->getId(), $pagamento, $this->getSubTotale(true)) ) {
+                                        $msg[] = '<li>Spiacente. Impossibile terminare la transazione</li>';
                                         $vd->setTitoloStep('Passo 3: seleziona metodo di pagamento');
                                         $vd->setSottoPagina('conferma_ordine_step3');
-
-                                    } else {
-                                        OrdineFactory::instance()->
-                                                salvaOrdine($_SESSION[self::elenco_articoli], $user->getId(), $this->getSubTotale());
+                                    } 
+                                    else {
                                         $_SESSION[self::elenco_articoli] = array();
-
                                         $vd->setSottoPagina('home');                                    
                                     }                                    
                                 }                                
@@ -370,7 +368,7 @@ class ClienteController extends BaseController {
 
     /**
      * Calcola il prezzo dell'ordine attuale
-     * @param boolean $flag abilita/disabilita il prezzo di spedizione
+     * @param boolean $flag abilita/disabilita il calcolo del prezzo di spedizione
      * @return float prezzo dell'ordine
      */
     private function getSubTotale($flag = false) {

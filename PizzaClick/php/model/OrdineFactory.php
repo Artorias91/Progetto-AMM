@@ -38,10 +38,10 @@ class OrdineFactory {
      * @param $elenco array di articoli che fanno parte dell'ordine
      * @param $cliente id cliente che ha effettuato l'ordine
      * @param Pagamento $pay il metodo di ordine scelto dal cliente
-     * @param float $prezzo_ordine il prezzo dell'ordine
+     * @param float $subtotale il prezzo dell'ordine
      * @return boolean true se il salvataggio va a buon fine, false altrimenti
      */
-    public function salvaOrdine($elenco, $cliente_id, /*Pagamento $pay, */$prezzo_ordine) {
+    public function salvaOrdine($elenco, $cliente_id, Pagamento $pay, $subtotale) {
         $mysqli = Db::getInstance()->connectDb();
         if (!isset($mysqli)) {
             error_log("[salvaOrdine] impossibile inizializzare il database");
@@ -68,18 +68,16 @@ class OrdineFactory {
 
         //stmt tab articoli        
         $stmt2->prepare($insert_articoli);
-        if (!$stmt) {
+        if (!$stmt2) {
             error_log("[salvaOrdine] impossibile" .
-                    " inizializzare il prepared statement");
-            
-            echo 'impossibile inizializzare il prepared statement';
-            
-            return 0;
+                    " inizializzare il prepared statement 2");
+            $mysqli->close();
+            return false;
         }        
                 
         //stmt tab ordini
         if (!$stmt->bind_param('di', 
-                floatval($prezzo_ordine), 
+                floatval($subtotale), 
                 intval($cliente_id)
                 )) {
             error_log("[salvaOrdine] impossibile" .
@@ -104,16 +102,22 @@ class OrdineFactory {
                 $ordine_id
                 )) {
             error_log("[salvaOrdine] impossibile" .
-                    " effettuare il binding in input");
-
-            echo 'impossibile" .
-                    " effettuare il binding in input';
-
-            return 0;
+                    " effettuare il binding in input stmt2");
+            $mysqli->close();
+            return false;
         }               
 
-        // inizio la transazione
+        // inizio transazione
         $mysqli->autocommit(false);        
+        
+        if($pay->getSaldo() >= $subtotale) {
+            PagamentoFactory::instance()->
+                    aggiornaSaldoPagamento($pay, $pay->getSaldo() - $subtotale);
+        } else {
+            $mysqli->rollback();
+            $mysqli->close();
+            return false;            
+        }
         
         //stmt tab ordini
         if (!$stmt->execute()) {
@@ -135,11 +139,10 @@ class OrdineFactory {
             
             if (!$stmt2->execute()) {
                 error_log("[salvaOrdine] impossibile" .
-                        " eseguire lo statement");
-
-                echo 'impossibile eseguire lo statement';
-
-                return 0;
+                        " eseguire lo statement 2");
+                $mysqli->rollback();
+                $mysqli->close();
+                return false;   
             }
         }
 

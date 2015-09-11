@@ -207,6 +207,64 @@ class PagamentoFactory {
 //        echo var_dump($row);
 
         return $pagamento;
+    }
+    
+   /**
+     * Aggiorna il saldo di un metodo di pagamento
+     * @param $nuovo_saldo il saldo da aggiornare
+     * @return int il numero di righe modificate
+     */    
+    public function aggiornaSaldoPagamento(Pagamento $pay, $nuovo_saldo) {
+        $floatVal = filter_var($nuovo_saldo, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
+        if (!isset($floatVal)) {
+            return null;
+        }
+        $query = "update pagamenti set saldo = ? where id = ?";
+
+        $mysqli = Db::getInstance()->connectDb();
+        if (!isset($mysqli)) {
+            error_log("[aggiornaSaldoPagamento] impossibile inizializzare il database");
+            $mysqli->close();
+            return 0;
+        }
+
+        $stmt = $mysqli->stmt_init();        
+        
+        
+        $stmt->prepare($query);
+        if (!$stmt) {
+            error_log("[aggiornaSaldoPagamento] impossibile" .
+                    " inizializzare il prepared statement");
+            
+            echo 'impossibile inizializzare il prepared statement';
+            
+            return 0;
+        }
+
+        if (!$stmt->bind_param('di', $floatVal, $pay->getId())) {
+            error_log("[aggiornaSaldoPagamento] impossibile" .
+                    " effettuare il binding in input");
+            
+            echo 'impossibile effettuare il binding in input';
+            
+            return 0;
+        }
+
+        if (!$stmt->execute()) {
+            error_log("[aggiornaSaldoPagamento] impossibile eseguire lo statement");
+            
+            echo 'impossibile eseguire lo statement';
+            
+            return 0;
+        }
+        $n = $stmt->affected_rows;
+        
+        $pay->setSaldo($floatVal);
+        
+        $stmt->close();
+        $mysqli->close();                
+        
+        return $n;
     }    
     
 }
