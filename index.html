@@ -16,9 +16,9 @@ and open the template in the editor.
           <ul>
               <li>Un sito di pizza's delivery</li>
               <li>Il cliente mette nel carrello le pizze selezionate dalla galleria o tramite selectmenu;<br>
-              in seguito, effettua la procedura per eseguire l'ordine</li>
-              <li>L'admin seleziona gli ordini ricevuti e li spedisce</li>
-              <li>Possibilit&agrave; da parte del cliente di modificare username, indirizzo di consegna e password;<br>
+              in seguito, effettua la procedura per eseguire l'ordine.</li>
+              <li>L'admin seleziona gli ordini ricevuti e li invia.</li>
+              <li>Possibilit&agrave; da parte del cliente di modificare username, e-mail, indirizzo di consegna e password;<br>
               visualizzare le carte di credito disponibili per il pagamento</li>
           </ul>
             
@@ -30,7 +30,9 @@ and open the template in the editor.
               <li>Due ruoli (cliente e admin)</li>
               <li><u>Transazione</u>: <code>php/model/<b>OrdineFactory.php</b> > salvaOrdine()</code></li>
               <li><u>Funzionalit&agrave; ajax</u>: <code>js/<b>gallery-script-ajax.js</b></code></li>
-              <li><u>Utilizzo di jQuery UI (selectmenu e tooltip)</u>: <code>js/<b>sidebar-form-ui.js</b></code></li>
+              <li><u>Utilizzo di jQuery UI (selectmenu e tooltip)</u>: <code>js/<b>sidebar-form-ui.js</b></code>
+              <br>(E' possibile disabilitare tale funzione commentando la riga 6: <code>php/view/cliente/<b>selectmenu.php</b></code>)
+              </li>
           </ul>
           <h3>Credenziali accesso:</h3>
           <ul>
