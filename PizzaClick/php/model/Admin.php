@@ -15,9 +15,6 @@ include_once 'User.php';
 
 
 class Admin extends User {
-    //put your code here
-    
-//    private $partitaIva;
     
     public function __construct() {
         parent::__construct();

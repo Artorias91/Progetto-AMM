@@ -210,25 +210,36 @@ class ClienteController extends BaseController {
                      */
                     case 'add':
                         //controlla la provenienza della richiesta: form's sidebar ...
-                        if(isset($request['pizza-selection']) && isset($request['size']) && isset($request['quantity'])) {
+                        if(isset($request['pizza-selection']) && 
+                                isset($request['size']) && 
+                                isset($request['quantity'])) {
                             
-                            $articolo = new ArticoloSession(PizzaFactory::instance()->
-                                    cercaPizzaPerId(intval($request['pizza-selection'])), $request['size'], intval($request['quantity']));
+                            $articolo = 
+                                new ArticoloSession(
+                                        PizzaFactory::instance()->cercaPizzaPerId(intval($request['pizza-selection'])), 
+                                        $request['size'], 
+                                        intval($request['quantity']));
                             
                             $this->aggiungiArticolo($articolo);
                         }
                         //... altrimenti form's gallery 
-                        if(isset($request['pizza-gallery']) && isset($request['size']) && isset($request['quantity'])) {
+                        if(isset($request['pizza-gallery']) && 
+                                isset($request['size']) && 
+                                isset($request['quantity'])) {
 
                             $key = intval($request['pizza-gallery']);
                             if(array_key_exists($key, $listaPizzeConImg)) {
-                                $articolo = new ArticoloSession(PizzaFactory::instance()->
-                                        cercaPizzaPerId($listaPizzeConImg[$key]->getId()), $request['size'], intval($request['quantity']));
+                                $articolo = 
+                                    new ArticoloSession(
+                                            PizzaFactory::instance()->
+                                            cercaPizzaPerId($listaPizzeConImg[$key]->getId()), 
+                                            $request['size'], 
+                                            intval($request['quantity']));
                                                             
-                            $this->aggiungiArticolo($articolo);                              
+                                $this->aggiungiArticolo($articolo); 
                             }
                         }
-                        file_put_contents('php/text.txt', $_SERVER['REQUEST_URI'], FILE_APPEND);
+//                        file_put_contents('php/text.txt', $_SERVER['REQUEST_URI'], FILE_APPEND);
 
                         $vd->setSottoPagina('home');
                         $this->showHomeCliente($vd);
@@ -368,12 +379,13 @@ class ClienteController extends BaseController {
      * @return float prezzo dell'ordine
      */
     private function getSubTotale($flag = false) {
-        (!$flag) ? $totale = 0 : $totale = 3;
+        (!$flag) ? $totale = 0 : $totale = 3.;
         if(!empty($_SESSION[self::elenco_articoli])) {
             foreach ($_SESSION[self::elenco_articoli] as $value) {
                 $totale += $value->getPrezzoArticolo();            
             }            
         }
+        
         
         return number_format((float)$totale, 2, ',', '');        
     }

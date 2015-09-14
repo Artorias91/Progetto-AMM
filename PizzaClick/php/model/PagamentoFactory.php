@@ -38,7 +38,7 @@ class PagamentoFactory {
      * Restituisce la lista dei metodi di pagamento (carte di credito) 
      * di uno specifico cliente
      * @param Cliente $cliente
-     * @return array una lista di pagamenti (metodi/carte)
+     * @return array una lista di metodi pagamenti
      */    
     public function &getListaPagamentiPerCliente(Cliente $cliente) {
 
@@ -140,6 +140,7 @@ class PagamentoFactory {
     /**
      * Carica una lista di pagamenti eseguendo un prepared statement
      * @param mysqli_stmt $stmt
+     * @param $flag : 1 -> un metodo | 2 -> piu' di uno
      * @return null
      */
     public function caricaPagamentiDaStmt(mysqli_stmt $stmt, $flag = 1) {
@@ -200,11 +201,6 @@ class PagamentoFactory {
         $pagamento->setScadenzaCarta($row['scadenza_carta']);
         $pagamento->setTitolareCarta($row['titolare_carta']);
         $pagamento->setTipoCarta($row['tipo_carta']);
-        
-//        $pagamento->setIndirizzo(IndirizzoFactory::instance()->
-//                caricaIndirizzoPerId($row['indirizzo_id']));
-        
-//        echo var_dump($row);
 
         return $pagamento;
     }

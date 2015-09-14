@@ -3,17 +3,10 @@
 <?php
     switch($vd->getSottoPagina()) {
         case 'conferma_ordine_step1':
-            ?>
-<!--<div class="sub">
-    <h3>Seleziona indirizzo di consegna</h3>-->
-    <? include 'indirizzo.php'; ?>    
-<!--</div>-->
-<?php
+            include 'indirizzo.php';
             break;
         case 'conferma_ordine_step2':
-            ?>
-<!--<div class="sub">
-    <h3>Riepilogo articoli</h3>    -->
+?>
     <div>
         <table class="resume-order">
             <thead>
@@ -59,13 +52,10 @@
             <input type="submit" value="Continua">
         </form>
     </div>        
-<!--</div>-->
 <?php
             break;
         case 'conferma_ordine_step3':
-            ?>
-<!--<div class="sub">
-    <h3>Seleziona metodo di pagamento</h3>-->
+?>
     <form method="post" action="cliente">    
         <input type="hidden" name="cmd" value="ordina"/>
         <table class="pagamenti">
@@ -102,11 +92,8 @@
                 </tr>
             </tfoot>
         </table>
-<!--        <a href="cliente?cmd=conferma_ordine_step2">Indietro</a>        -->
     </form>    
-<!--</div>-->    
-<?php
-            
+<?php            
             break;
     } 
 ?>

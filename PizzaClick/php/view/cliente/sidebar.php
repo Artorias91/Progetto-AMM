@@ -5,7 +5,7 @@ switch ($vd->getSottoPagina()) {
         break;
     case 'conferma_ordine_step1': case 'conferma_ordine_step2': case 'conferma_ordine_step3':
 ?>
-<div class="sub" style="margin-bottom: 5%; background-color: #FFF5E8;">
+<div class="sub" style="margin-bottom: 5%; background-color: #F6F2EC;">
     <ol style="float: right;">
         <li class="<?= $vd->getSottoPagina() == 'conferma_ordine_step1' ? 'actual' : '' ?>">Seleziona indirizzo di spedizione</li>
         <li class="<? echo $vd->getSottoPagina() == 'conferma_ordine_step2' ? 'actual ' : ''; 

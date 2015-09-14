@@ -1,4 +1,16 @@
-<form method="post" action="cliente/visualizza_pagamento">
+<script src="../lib/jquery-ui-1.11.3/jquery-ui.min.js"></script>
+
+<script>
+    function checkIfOptionIsSelected() { 
+        if (document.forms['pagamenti'].firstChild.parentElement[1].value == '') { 
+            alert('Seleziona un metodo di pagamento');
+            return false; 
+        } 
+        return true; 
+    }
+</script>
+
+<form id="pagamenti" method="post" action="cliente/visualizza_pagamento" onsubmit="return checkIfOptionIsSelected()">
     <input type="hidden" name="cmd" value="v_pagamento"/>
     <label for="carta">Carta</label>
     <select name="carta" id="carta">

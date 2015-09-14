@@ -110,9 +110,12 @@ class OrdineFactory {
         // inizio transazione
         $mysqli->autocommit(false);        
         
+//        echo 'attuale:' . $pay->getSaldo() . '<br>';
+        
         if($pay->getSaldo() >= $subtotale) {
             PagamentoFactory::instance()->
                     aggiornaSaldoPagamento($pay, $pay->getSaldo() - $subtotale);
+//        echo 'nuovo:' . $pay->getSaldo() . '<br>';
         } else {
             $mysqli->rollback();
             $mysqli->close();
@@ -174,7 +177,7 @@ class OrdineFactory {
         on 
             ordini.cliente_id = clienti.id
         where 
-            ordini.cliente_id = ?";
+            ordini.cliente_id = ? && ordini.data_conclusione = 0";
         
         $mysqli = Db::getInstance()->connectDb();
         

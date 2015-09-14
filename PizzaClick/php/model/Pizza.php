@@ -10,9 +10,7 @@
  *
  * @author amm
  */
-class Pizza {
-    
-//    static $count;
+class Pizza {    
     
     private $id;
     
@@ -26,13 +24,8 @@ class Pizza {
     private $url_img;
 
     
-    public function __construct() {
-//        self::$count++;
-    }
+    public function __construct() {}
 
-//    public function count() {
-//        return self::$count;
-//    }            
     
     public function getId() {
         return $this->id;
@@ -62,7 +55,6 @@ class Pizza {
     }    
     
     public function setIngredientiExtra($ingredienti) {
-        
         if($ingredienti == NULL)
             $ingredienti = 'nessuno';
         $this->ingredienti_extra = $ingredienti;
@@ -70,7 +62,8 @@ class Pizza {
     }
     
     public function getPrezzo() {
-        return number_format((float)$this->prezzo, 2, ',', '');
+        return $this->prezzo;
+//        return number_format((float)$this->prezzo, 2, ',', '');
     }    
     
     public function setPrezzo($prezzo) {
@@ -87,10 +80,8 @@ class Pizza {
         return $this->url_img;
     }
     
-    public function setUrlImage($url/*, $img_w, $img_h*/) {
-//        $urlVal = filter_var("http://localhost/PizzaClick/$url", FILTER_VALIDATE_URL, FILTER_NULL_ON_FAILURE);
-        
-        if(/*isset($urlVal) && */file_exists('../' . $url)) {
+    public function setUrlImage($url) {
+        if(file_exists('../' . $url)) {
             $this->url_img = '../' . $url;
             return true;            
         }

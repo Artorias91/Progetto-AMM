@@ -74,7 +74,7 @@ class Ordine {
     public function setSubtotale($prezzo) {
         $floatVal = filter_var($prezzo, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
         if(isset($floatVal)){
-            $this->subtotale = $floatVal;
+            $this->subtotale = $floatVal - 3.;
             return true;
         }        
         return false;    

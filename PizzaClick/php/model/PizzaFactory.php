@@ -31,9 +31,8 @@ class PizzaFactory {
     }    
     
     /**
-     * Restituisce la lista delle pizze senza immagine (colonna)
-     * @param boolean $flag true si chiede una lista di pizze provviste
-     * di un'immagine, altrimenti senza
+     * Restituisce una lista omogenea (con o senza immagine) di pizze
+     * @param boolean $flag abilita/disabilita la richiesta di immagine
      * @return array una lista di pizze con o senza immagine (non entrambi)
      */
     public function &getListaPizze($flag) {

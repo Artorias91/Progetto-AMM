@@ -7,6 +7,9 @@
 
 /**
  * Description of Articolo
+ * 
+ * Classe di supporto per la sessione
+ * 
  *
  * @author amm
  */
@@ -17,17 +20,10 @@ include_once 'Pizza.php';
 class ArticoloSession {
     
     /**
-     * Incremento del costo base della pizza nel caso la dimensione
+     * Incremento/Decremento del costo base della pizza in relazione alla dimensione
      * sia 'Grande'
      */
-    const IncrCost = 0.5;
-
-    /**
-     * Decremento del costo base della pizza nel caso la dimensione
-     * sia 'ridotta'
-     */    
-    const DecrCost = -0.5;
-
+    const SizeCost = 0.5;
     
     const Ridotta = 'ridotta';
     
@@ -72,14 +68,7 @@ class ArticoloSession {
      * Il prezzo dell'articolo
      * @var float
      */        
-    private $prezzo;
-    
-    /**
-     * L'ordine a cui l'articolo appartiene
-     * @var \Ordine
-     */        
-    private $ordine;
-    
+    private $totale;
     
     
     public function __construct($pizza, $size, $qty) {
@@ -135,7 +124,7 @@ class ArticoloSession {
      */
     private function setPizza(Pizza $pizza) {
         $this->pizza = $pizza;
-        $this->prezzo_pizza = $pizza->getPrezzo();
+//        $this->prezzo_pizza = $pizza->getPrezzo();
         return true;
     }    
 
@@ -161,12 +150,13 @@ class ArticoloSession {
 
             switch (strtolower($size)) {
                 case self::Ridotta :
-                    $this->prezzo_pizza += self::DecrCost;
+                    $this->prezzo_pizza = $this->pizza->getPrezzo() - self::SizeCost;
                     break;
                 case self::Grande :
-                    $this->prezzo_pizza += self::IncrCost;                    
+                    $this->prezzo_pizza = $this->pizza->getPrezzo() + self::SizeCost;                    
                     break;
                 default :
+                    $this->prezzo_pizza = $this->pizza->getPrezzo();
             }                        
             return true;            
         }
@@ -234,14 +224,15 @@ class ArticoloSession {
      * @return float
      */
     public function getPrezzoArticolo() {
-        return $this->prezzo;
+        return $this->totale;
+//        number_format((float)$this->totale, 2, ',', '');
     }
         
     /**
      * Restituisce il prezzo di ogni pizza
      * @return float
      */
-    public function getPrezzoPizza() {
+    public function getPrezzoPizza() {        
         return number_format((float)$this->prezzo_pizza, 2, ',', '');
     }
 
@@ -251,7 +242,7 @@ class ArticoloSession {
      * false altrimenti
      */
     private function calcolaPrezzoArticolo() {
-        $this->prezzo = $this->prezzo_pizza * $this->qty;
+        $this->totale = $this->prezzo_pizza * $this->qty;
         return true;
     }
     
