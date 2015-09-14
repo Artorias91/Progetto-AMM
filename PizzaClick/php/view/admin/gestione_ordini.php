@@ -17,7 +17,7 @@
         $i = 0;
         foreach ($ordini as $ordine) { ?>
         <tr <?= $i % 2 == 1 ? 'class="par"' : '' ?>>
-            <td>
+            <td class="resize">
                 <ul style="list-style-type: none; padding-left: 0.5em;">     
                     <li><b><?=$ordine->getCliente()->getIndirizzo()->getDestinatario()?></b></li>
                     <li><?=$ordine->getCliente()->getIndirizzo()->getNomeIndirizzo()?></li>
@@ -28,7 +28,7 @@
                 </ul>                
             </td>
             <td><?=$ordine->getDataCreazione()?></td>
-            <td>
+            <td class="resize">
                 <ul>
                     <?php
                         foreach ($ordine->getArticoli() as $articolo) {

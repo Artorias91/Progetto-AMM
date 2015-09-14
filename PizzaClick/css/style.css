@@ -385,7 +385,12 @@ table {
 }
 
 .ordini, .ordini th {
-    width: auto;
+    /*width: auto;*/
+}
+
+td.resize {
+    text-align: left;
+    font-size: 8pt;    
 }
 
 

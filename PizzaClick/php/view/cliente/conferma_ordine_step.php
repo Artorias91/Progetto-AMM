@@ -34,7 +34,7 @@
                 <tr <?= $i % 2 == 1 ? 'class="par"' : '' ?> id="<?= $key ?>">
                     <td>&times;<?= $value->getQty() ?></td>
                     <td><?= $value->getPizza()->getNome() ?></td>
-                    <td style="text-align: left; font-size: 8pt;"><?= $value->getPizza()->getIngredientiExtra() ?></td>
+                    <td class="resize"><?= $value->getPizza()->getIngredientiExtra() ?></td>
                     <td><?= $value->getSize() ?></td>
                     <td>&euro;<?= $value->getPrezzoArticolo() ?></td>
                     <td>
