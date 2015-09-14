@@ -254,7 +254,7 @@ class ClienteController extends BaseController {
                     
                     case 'v_pagamento':
                         $msg = array();
-                        var_dump($request);
+//                        var_dump($request);
                         $p = 0;
                         
                         if (isset($request['carta'])) {
