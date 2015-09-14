@@ -2,6 +2,7 @@
     <h3>Ordini</h3>
     <ul>
         <li><a href="cliente/cronologia_ordini">Visualizza cronologia ordini</a></li>
+        <li><a href="cliente/ordini_attivi">Visualizza ordini in corso</a></li>
     </ul>        
     <h3>Impostazioni account</h3>        
     <ul>

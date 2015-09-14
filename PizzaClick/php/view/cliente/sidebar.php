@@ -1,6 +1,6 @@
 <?php
 switch ($vd->getSottoPagina()) {
-    case 'cronologia_ordini': case 'account': case 'base': case 'password': case 'indirizzo': case 'pagamento': case 'visualizza_pagamento': 
+    case 'cronologia_ordini': case 'ordini_attivi': case 'account': case 'base': case 'password': case 'indirizzo': case 'pagamento': case 'visualizza_pagamento': 
         include 'sidebar_account.php';
         break;
     case 'conferma_ordine_step1': case 'conferma_ordine_step2': case 'conferma_ordine_step3':

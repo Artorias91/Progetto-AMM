@@ -129,6 +129,12 @@ class ClienteController extends BaseController {
                         $vd->setBreadcrumb("Visualizza cronologia ordini");
                         
                         break;
+                    case 'ordini_attivi':
+                        $ordini = OrdineFactory::instance()->getListaOrdiniPerCliente($user, true);
+                        $vd->setSottoPagina('cronologia_ordini');
+                        $vd->setBreadcrumb("Visualizza ordini in corso");
+                        
+                        break;
 
                     default:
                         if (!isset($_SESSION[self::elenco_articoli])) {

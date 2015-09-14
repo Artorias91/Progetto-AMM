@@ -19,9 +19,9 @@ switch ($vd->getSottoPagina()) {
     case 'account':
         include 'content_account.php';
         break;
-    case 'cronologia_ordini':
-        include 'cronologia_ordini.php';
-        break;     
+    case 'cronologia_ordini': case 'ordini_attivi':
+        include 'visualizza_ordini.php';
+        break;
     case 'base':
 ?>
 <form method="post" action="cliente/impostazioni<?= '?'.$vd->scriviToken()?>">

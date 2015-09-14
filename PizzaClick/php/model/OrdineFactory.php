@@ -161,10 +161,11 @@ class OrdineFactory {
     /**
      * Restituisce la lista degli ordini effettuati da uno specifico cliente
      * @param Cliente $cliente
+     * @param boolean $flag true -> ordini attivi | false -> ordini chiusi
      * @return array una lista di ordini
      */    
-    public function &getListaOrdiniPerCliente(Cliente $cliente) {
-
+    public function &getListaOrdiniPerCliente(Cliente $cliente, $flag = false) {
+        
         $ordini = array();
         $query = 
         "select 
@@ -177,7 +178,14 @@ class OrdineFactory {
         on 
             ordini.cliente_id = clienti.id
         where 
-            ordini.cliente_id = ? && ordini.data_conclusione = 0";
+            ordini.cliente_id = ?";
+        
+        if($flag) {
+            $query .= ' && ordini.data_conclusione = 0';
+        } else {
+            $query .= ' && ordini.data_conclusione <> 0';            
+        }
+        
         
         $mysqli = Db::getInstance()->connectDb();
         
