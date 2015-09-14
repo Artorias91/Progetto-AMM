@@ -59,7 +59,6 @@ class ClienteController extends BaseController {
                     case 'base':
                         $vd->setSottoPagina('base');
                         $vd->setBreadcrumb("Modifica username o e-mail");
-                        file_put_contents('text.txt', '63: ' . $_REQUEST['subpage']);
 
                         break;
                     case 'password':
@@ -92,35 +91,26 @@ class ClienteController extends BaseController {
                         $vd->setSottoPagina('account');
                         break;
                     case 'conferma_ordine_step1':
-                        file_put_contents('text.txt', '96: ' . $_REQUEST['subpage']);
 
                         $vd->setSottoPagina('conferma_ordine_step1');
                         
                         $vd->setTitoloStep('Passo 1: seleziona indirizzo di consegna');
                         
-//                        $this->showHomeCliente($vd);
-                        
                         break;
                     case 'conferma_ordine_step2':
-                        file_put_contents('text.txt', '106: ' . $_REQUEST['subpage']);
 
                         $vd->setSottoPagina('conferma_ordine_step2');
                         
                         $vd->setTitoloStep('Passo 2: riepilogo articoli');
                         
-//                        $this->showHomeCliente($vd);
-                        
                         break;
                     case 'conferma_ordine_step3':
-                        file_put_contents('text.txt', '116: ' . $_REQUEST['subpage']);
                         
                         $vd->setSottoPagina('conferma_ordine_step3');
 
                         $vd->setTitoloStep('Passo 3: seleziona metodo di pagamento');
                         
                         $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);
-                        
-//                        $this->showHomeCliente($vd);
                                                 
                         break;
                     case 'cronologia_ordini':
@@ -194,9 +184,7 @@ class ClienteController extends BaseController {
                             }
                         }
 
-                        $subpage = $_REQUEST['subpage'];
-//                        file_put_contents('text.txt', '182: ' . $subpage);
-      
+                        $subpage = $_REQUEST['subpage'];      
                         
                         if(empty($_SESSION[self::elenco_articoli])) {
                             $subpage = 'home';
