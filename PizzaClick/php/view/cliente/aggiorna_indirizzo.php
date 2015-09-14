@@ -1,4 +1,4 @@
-<form method="post" action="cliente/indirizzo<?= '?'.$vd->scriviToken()?>">
+<form method="post" action="cliente/indirizzo">
     <input type="hidden" name="cmd" value="aggiorna_indirizzo"/>    
     <label for="destinatario">Destinatario</label>
     <input class="text" required placeholder="Nome e cognome" name="destinatario" id="destinatario" 

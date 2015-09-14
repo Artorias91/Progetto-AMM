@@ -33,7 +33,7 @@ class BaseController {
         
         $vd->setPagina($request['page']);
                 
-        $this->setImpToken($vd, $request);
+//        $this->setImpToken($vd, $request);
         
         if(isset($request["cmd"])) {
             switch ($request["cmd"]) {
@@ -46,10 +46,10 @@ class BaseController {
                     if($this->loggedIn()) {
                         $user = UserFactory::instance()->cercaUtentePerId($_SESSION[self::user], $_SESSION[self::role]);
                         
-                        //nel caso si sia loggato il cliente
+                        // nel caso si sia loggato il cliente
                         if($_SESSION[self::role] == Cliente::Cliente) {
                             header('Location: ' . Settings::getApplicationPath() . 'php/cliente/home');
-                        } else {
+                        } else {// ... altrimenti
                             header('Location: ' . Settings::getApplicationPath() . 'php/admin/home');                            
                         }
                     }
@@ -69,9 +69,7 @@ class BaseController {
                 $this->showLoginPage($vd);
             }
         }
-//        if($vd->isJson()) {
-//            $this->showHomeUser($vd);
-//        }
+
         require basename(__DIR__) . '/../view/master.php';
 
     }
@@ -181,42 +179,6 @@ class BaseController {
         $vd->setSidebarFile(basename(__DIR__) . '/../view/admin/sidebar.php');
     }    
 
-    
-//    /**
-//     * Crea un messaggio di feedback per l'utente 
-//     * @param ViewDescriptor $vd il descrittore della pagina
-//     * @param array $msg_e lista di messaggi di errore
-//     * @param array $msg_c lista di messaggi di conferma
-//     * @param string $ifMsg il messaggio da mostrare nel caso in cui
-//     * non siano stati rilevati errori o apportate modifiche
-//     */
-//    protected function creaFeedbackUtente($vd, &$msg_e, &$msg_c, &$ifMsg) {
-//        if (count($msg_e) > 0) {
-//            // ci sono messaggi di errore nell'array,
-//            // qualcosa e' andato storto...
-//            $error = "Sono stati riscontrati i seguenti problemi:\n<ul>\n";
-//            foreach ($msg_e as $m) {
-//                $error = $error . $m . "\n";
-//            }
-//            // imposto il messaggio di errore
-//            $vd->setMessaggioErrore($error);
-//        }
-//        if(count($msg_c) > 0){
-//            // ci sono messaggi di conferma nell'array,
-//            // quindi mostro le modifiche applicate
-//            $ok = "Sono state applicate le seguenti modifiche:\n<ul>\n";
-//            foreach ($msg_c as $m) {
-//                $ok = $ok . $m . "\n";
-//            }
-//            $vd->setMessaggioConferma($ok);
-//        }
-//        //nessun errore rilevato e nessuna modifica applicata
-//        if(empty($msg_e) && empty($msg_c)) {
-//            $ifMsg = 'Nessuna modifica applicata:' .
-//            "<br><span style=\"font-size: 8pt;\">$ifMsg</span></li>";
-//            $vd->setMessaggioErrore($ifMsg);
-//        }
-//    }        
     /**
      * Crea un messaggio di feedback per l'utente 
      * @param array $msg lista di messaggi di errore

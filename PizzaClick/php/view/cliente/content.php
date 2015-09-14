@@ -40,7 +40,7 @@ switch ($vd->getSottoPagina()) {
         break;
     case 'password':
 ?>
-<form method="post" action="cliente/impostazioni<?= '?'.$vd->scriviToken()?>">
+<form method="post" action="cliente/password">
     <input type="hidden" name="cmd" value="aggiorna_password"/>    
     <label for="oldPass">Password attuale</label>
     <input class="text" required type="password" name="oldPass" id="oldPass"/><br>

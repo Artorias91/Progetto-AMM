@@ -31,9 +31,9 @@ class AdminController extends BaseController {
         
         $vd->setPagina($request['page']);
         
-        $this->setImpToken($vd, $request);
+//        $this->setImpToken($vd, $request);
 
-        //untente non autentificato
+        //utente non autentificato
         if(!$this->loggedIn()) {
             $this->showLoginPage($vd);
         }//utente autentificato
