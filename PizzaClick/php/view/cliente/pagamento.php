@@ -15,9 +15,9 @@
     <label for="carta">Carta</label>
     <select name="carta" id="carta">
         <option value="" selected disabled>Seleziona ...</option>
-    <?php foreach($pagamenti as $pagamento) { ?>
-        <option value="<?=$pagamento->getId()?>">
-            <?= 'termina con ' . substr($pagamento->getNumeroCarta(), -4) ?>
+    <?php foreach($pagamenti as $key => $value) { ?>
+        <option value="<?= $key ?>">
+            <?= 'termina con ' . substr($value->getNumeroCarta(), -4) ?>
         </option>
     <?php } ?>       
     </select>

@@ -6,16 +6,16 @@
 <script type="text/javascript" src="../js/sidebar-form-ui.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/form-style.css">
 
-
 <script>
-function checkIfOptionIsSelected() { 
-    if (document.forms['aggiungi'].firstChild.parentElement[0].value == '') { 
-        alert('Seleziona il tipo di pizza');
-        return false; 
-    } 
-    return true; 
-}
-</script>    
+    function checkIfOptionIsSelected() { 
+        if (document.forms['aggiungi'].firstChild.parentElement[0].value == '') { 
+            alert('Seleziona il tipo di pizza');
+            return false; 
+        } 
+        return true; 
+    }
+</script>
+
 <div class="selection">
     <h2>Scegli la tua pizza preferita</h2><hr>
     <form class="selection" id="aggiungi" method="post" action="index.php?page=cliente" onsubmit="return checkIfOptionIsSelected()">

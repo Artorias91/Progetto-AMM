@@ -67,17 +67,22 @@ class ClienteController extends BaseController {
                         
                         break;
                     case 'pagamento':
+                        $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);
+                        
                         $vd->setSottoPagina('pagamento');
                         $vd->setBreadcrumb("Visualizza i tuoi metodi di pagamento");
-                        $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);
                         
                         break;
                     case 'visualizza_pagamento':
+                        $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);
+                        
                         $vd->setSottoPagina('visualizza_pagamento');
                         $vd->setBreadcrumb("Visualizza i tuoi metodi di pagamento");
                         
                         break;
                     case 'indirizzo':
+                        $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);                        
+                        
                         $vd->setSottoPagina('indirizzo');
                         $vd->setBreadcrumb("Modifica indirizzo di consegna");
 
@@ -249,23 +254,26 @@ class ClienteController extends BaseController {
                     
                     case 'v_pagamento':
                         $msg = array();
-                        
-                        $carta = new Pagamento;
-                        $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);
+                        var_dump($request);
+                        $p = 0;
                         
                         if (isset($request['carta'])) {
-                            $intVal = filter_var($request['carta'], FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-                            if (!isset($intVal) || $intVal < 1 || $intVal > count($pagamenti)) {
-                                $msg[] = '<li>Il metodo di pagamento specificato non &egrave; corretto</li>';
+                            $p = filter_var($request['carta'], FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+                            if (!array_key_exists($p, $pagamenti)) {
+                                $msg[] = '<li>Il metodo di pagamento specificato non &egrave; valido</li>';
+                                $vd->setSottoPagina('pagamento');                                
+                                $this->creaFeedbackUtente($msg, $vd, '');                            
+                                
+                            } else {
+                                $carta = $pagamenti[$p];     
+                                $vd->setSottoPagina('visualizza_pagamento');                            
                             }
-                            $carta = $pagamenti[$intVal - 1];
-                            $vd->setSottoPagina('visualizza_pagamento');                        
+                        
                         } else {
-//                            echo 'problema';
-                            $vd->setSottoPagina('pagamento');                        
+                            $vd->setSottoPagina('pagamento');
                         }          
                         
-                        $vd->setBreadcrumb("Visualizza i tuoi metodi di pagamento");                            
+//                        $vd->setBreadcrumb("Visualizza i tuoi metodi di pagamento");                            
                         $this->showHomeUser($vd);                        
                         break;
                     case 'aggiorna_indirizzo':
