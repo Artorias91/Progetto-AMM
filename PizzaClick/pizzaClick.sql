@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Set 14, 2015 alle 20:18
+-- Generato il: Set 14, 2015 alle 23:54
 -- Versione del server: 5.5.35
 -- Versione PHP: 5.4.6-1ubuntu1.7
 
@@ -77,14 +77,15 @@ CREATE TABLE IF NOT EXISTS `clienti` (
   `indirizzo_id` bigint(20) unsigned DEFAULT NULL,
   UNIQUE KEY `id` (`id`),
   KEY `indirizzi_clienti` (`indirizzo_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dump dei dati per la tabella `clienti`
 --
 
 INSERT INTO `clienti` (`id`, `username`, `password`, `email`, `nome`, `cognome`, `indirizzo_id`) VALUES
-(1, 'pippo', '123456', 'pippo@tiscali.it', 'Mattia', 'Contini', 1);
+(1, 'pippo', '123456', 'pippo@tiscali.it', 'Mattia', 'Contini', 1),
+(2, 'pinco', '123456', 'pinco@hotmail.com', 'Igor Maria', 'Contini', 2);
 
 -- --------------------------------------------------------
 
@@ -105,7 +106,8 @@ CREATE TABLE IF NOT EXISTS `clienti_pagamenti` (
 
 INSERT INTO `clienti_pagamenti` (`clienti_id`, `pagamenti_id`) VALUES
 (1, 1),
-(1, 2);
+(1, 2),
+(2, 2);
 
 -- --------------------------------------------------------
 
@@ -122,14 +124,15 @@ CREATE TABLE IF NOT EXISTS `indirizzi` (
   `cap` varchar(5) DEFAULT NULL,
   `telefono` varchar(10) DEFAULT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dump dei dati per la tabella `indirizzi`
 --
 
 INSERT INTO `indirizzi` (`id`, `destinatario`, `via_num`, `citta`, `provincia`, `cap`, `telefono`) VALUES
-(1, 'Mattia Contini', 'via Monte Biagio 27', 'SÃ¬nnai', 'CA', '09088', '0987654322');
+(1, 'Mattia Contini', 'via Monte Biagio 27', 'Sinnai', 'CA', '09088', '0987654322'),
+(2, 'Igor Maria Contini', 'viale Hogwarts 66', 'Sinnai', 'CA', '09088', '1211312312');
 
 -- --------------------------------------------------------
 
