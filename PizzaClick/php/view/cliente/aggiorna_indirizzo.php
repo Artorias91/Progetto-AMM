@@ -21,7 +21,7 @@
            value="<?= $user->getIndirizzo()->getCap() ?>"/>
     <br>
     <label for="telefono">Telefono</label>
-    <input class="text" required maxlength="10" name="telefono" id="telefono" 
+    <input class="text" required placeholder="&phone;" maxlength="10" name="telefono" id="telefono" 
            value="<?= $user->getIndirizzo()->getTelefono() ?>"/>
     <br>                    
     <input class="modifica" type="submit" value="Salva modifiche"/>

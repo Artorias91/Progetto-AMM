@@ -131,11 +131,9 @@ class ClienteController extends BaseController {
                         break;
 
                     default:
-                        $msg = array();
                         if (!isset($_SESSION[self::elenco_articoli])) {
                             $_SESSION[self::elenco_articoli] = array();
-                        }     
-                        
+                        }
                         $vd->setSottoPagina('home');
                         break;
                 }
@@ -176,7 +174,6 @@ class ClienteController extends BaseController {
                             
                             $this->creaFeedbackUtente($msg, $vd, 'Ordine inviato');
                         }
-//                        $this->creaFeedbackUtente($vd, $msg, $msgb, $msgc);
                         
                         $this->showHomeCliente($vd);
                         $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);                        
@@ -192,7 +189,7 @@ class ClienteController extends BaseController {
                         }
 
                         $subpage = $_REQUEST['subpage'];
-                        file_put_contents('text.txt', '182: ' . $subpage);
+//                        file_put_contents('text.txt', '182: ' . $subpage);
       
                         
                         if(empty($_SESSION[self::elenco_articoli])) {
@@ -256,7 +253,6 @@ class ClienteController extends BaseController {
                             if (!isset($intVal) || $intVal < 1 || $intVal > count($pagamenti)) {
                                 $msg[] = '<li>Il metodo di pagamento specificato non &egrave; corretto</li>';
                             }
-//                            $this->creaFeedbackUtente($vd, array(), array(), '');
                             $carta = $pagamenti[$intVal - 1];
                             $vd->setSottoPagina('visualizza_pagamento');                        
                         } else {

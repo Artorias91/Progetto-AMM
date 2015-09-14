@@ -42,10 +42,10 @@ class AdminController extends BaseController {
                 $_SESSION[BaseController::user], $_SESSION[BaseController::role]);
             if(isset($request["subpage"])) {
                 switch ($request["subpage"]) {
-                    case 'gestione_ordini':
+                    case 'gestione_ordini':                        
                         $ordini = OrdineFactory::instance()->getListaOrdiniAttivi();
                         $vd->setSottoPagina('gestione_ordini');
-                        
+
                         break;
                     default :
                         $vd->setSottoPagina('home');
@@ -65,15 +65,18 @@ class AdminController extends BaseController {
                         
                         if(isset($request['id'])) {
                             if(OrdineFactory::instance()->chiudiOrdinePerId($request['id']) != 1) {
-                                $msg[] = '<li>L\'ordine #' . $request['id'] .  ' non &egrave; presente nel DB</li>';
+                                $msg[] = '<li>L\'ordine #' . $request['id'] .  ' non &egrave; valido</li>';                                         
                             }
-                        } 
-                        
+                        }
                         $this->creaFeedbackUtente($msg, $vd, 'Ordine #' . $request['id'] . ' inviato');
                         
                         $vd->setSottoPagina('gestione_ordini');                        
                         $this->showHomeAdmin($vd);
                         
+                        /* Non mostra il msg di errore/conferma */
+                        header('Location: ' . Settings::getApplicationPath() . 'php/admin/gestione_ordini');
+                        exit();
+                        /* ************************************ */                        
                         break;
                     default : $this->showHomeAdmin($vd);                    
                 }

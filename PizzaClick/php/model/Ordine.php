@@ -24,7 +24,7 @@ class Ordine {
     
     private $articoli;
     
-    private $cliente_id;
+    private $cliente;
     
     
     public function __construct() {}
@@ -52,28 +52,23 @@ class Ordine {
     }  
     
     /**
-     * Restituisce l'identificatore del cliente che ha eseguito l'ordine
+     * Restituisce il cliente che ha eseguito l'ordine
      * @return int
      */
-    public function getClienteId() {
-        return $this->cliente_id;
+    public function getCliente() {
+        return $this->cliente;
     }
     
     /**
-     * Imposta l'id del cliente che ha eseguito l'ordine
+     * Imposta il cliente che ha eseguito l'ordine
      * @param int $id
      */
-    public function setClienteId($id){
-        $intVal = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-        if(isset($intVal)){
-            $this->cliente_id = $intVal;
-            return true;
-        }        
-        return false;  
+    public function setCliente(Cliente $cliente){    
+        $this->cliente = $cliente;  
     }      
     
     public function getSubtotale() {
-        return $this->subtotale;
+        return number_format((float)$this->subtotale, 2, ',', '');
     }
     
     public function setSubtotale($prezzo) {

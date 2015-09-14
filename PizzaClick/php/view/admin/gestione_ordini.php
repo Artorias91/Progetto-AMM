@@ -5,11 +5,10 @@
 <table class="ordini">
     <thead>
         <tr>
-            <th>ID ordine</th>
-            <th>ID cliente</th>
-            <th>Data ordine</th>
+            <th>Indirizzo cliente</th>
+            <th>Data ordine <a href="">&dtrif;</a></th>
             <th style="width: 45%;">Articoli<br><span style="font-size: x-small;">[qt&agrave;, tipo, dimensione e prezzo]</span></th>
-            <th>Subtotale<br><span style="font-size: small;">(EURO)</span></th>
+            <th>Subtotale<br><span style="font-size: small;">(EURO) <a href="">&utrif;</a></span></th>
             <th>-</th>
         </tr>
     </thead>
@@ -18,8 +17,16 @@
         $i = 0;
         foreach ($ordini as $ordine) { ?>
         <tr <?= $i % 2 == 1 ? 'class="par"' : '' ?>>
-            <td><?=$ordine->getId()?></td>
-            <td><?=$ordine->getClienteId()?></td>
+            <td>
+                <ul style="list-style-type: none; padding-left: 0.5em;">     
+                    <li><b><?=$ordine->getCliente()->getIndirizzo()->getDestinatario()?></b></li>
+                    <li><?=$ordine->getCliente()->getIndirizzo()->getNomeIndirizzo()?></li>
+                    <li><?=$ordine->getCliente()->getIndirizzo()->getCitta()?>, 
+                            <?=$ordine->getCliente()->getIndirizzo()->getProvincia()?></li>
+                    <li><?=$ordine->getCliente()->getIndirizzo()->getCAP()?></li>   
+<!--                    <li><?=$ordine->getCliente()->getIndirizzo()->getTelefono()?></li>   -->
+                </ul>                
+            </td>
             <td><?=$ordine->getDataCreazione()?></td>
             <td>
                 <ul>

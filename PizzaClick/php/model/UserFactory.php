@@ -163,10 +163,10 @@ class UserFactory {
     /**
      * Cerca un cliente per id
      * @param int $id
-     * @return Cliente un oggetto Cliente nel caso sia stato trovato,
+     * @return Cliente/Admin un oggetto Cliente/Admin nel caso sia stato trovato,
      * NULL altrimenti
      */
-    public function cercaUtentePerId($id, $role) {
+    public function cercaUtentePerId($id, $role = User::Cliente) {
         $intval = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
         if (!isset($intval)) {
             return null;

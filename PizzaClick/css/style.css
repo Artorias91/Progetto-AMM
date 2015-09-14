@@ -3,13 +3,6 @@ body {
     color: #333;
 }
 
-/*body {
-	margin: 0 0 200px;
-	padding: 0;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-}*/
-
 .header, .footer {
     height: 50px;
     width: 100%;
@@ -238,7 +231,7 @@ ul li a:hover {
 }
 
 div.login-box {
-    width: 65%;
+    width: 75%;
     padding: 21px 3px;
 
     border: 1px solid #C1C1C1;
@@ -255,7 +248,8 @@ div.login-box {
     border-radius: 2px;
     box-shadow: 0px 0px 3px #969595;
     border: 1px solid #BCB29F;
-    width: 37%;
+    width: 35%;
+    height: 20px;
 }
 
 input[type="submit"] {

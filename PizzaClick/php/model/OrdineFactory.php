@@ -264,7 +264,8 @@ class OrdineFactory {
                 getListaArticoliPerIdOrdine($row['id']));
 
         if($flag) {
-            $ordine->setClienteId($row['cliente_id']);
+            $ordine->setCliente(UserFactory::instance()->
+                    cercaUtentePerId($row['cliente_id']));
         }
         
         return $ordine;
@@ -282,7 +283,7 @@ class OrdineFactory {
         if (!isset($intval)) {
             return null;
         }
-        $query = "update ordini set data_conclusione = NOW() where id = ?";
+        $query = "update ordini set data_conclusione = NOW() where id = ? && data_conclusione = 0";
 
         $mysqli = Db::getInstance()->connectDb();
         if (!isset($mysqli)) {

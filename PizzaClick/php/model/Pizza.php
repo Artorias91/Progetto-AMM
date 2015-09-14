@@ -70,7 +70,7 @@ class Pizza {
     }
     
     public function getPrezzo() {
-        return $this->prezzo;
+        return number_format((float)$this->prezzo, 2, ',', '');
     }    
     
     public function setPrezzo($prezzo) {

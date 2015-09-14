@@ -77,15 +77,15 @@ class Articolo {
 
     /**
      * Restituisce il prezzo dell'articolo
-     * @return int
+     * @return float
      */
     public function getPrezzo() {
-        return $this->prezzo;
+        return number_format((float)$this->prezzo, 2, ',', '');
     }
     
     /**
      * Imposta il prezzo dell'articolo
-     * @param int $id
+     * @param float $prezzo
      */
     public function setPrezzo($prezzo){
         $floatVal = filter_var($prezzo, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
