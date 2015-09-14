@@ -386,7 +386,7 @@ table {
 }
 
 .ordini, .ordini th {
-    /*width: auto;*/
+    width: auto;
 }
 
 td.resize {

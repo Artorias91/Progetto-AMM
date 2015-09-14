@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Set 05, 2015 alle 12:27
+-- Generato il: Set 14, 2015 alle 20:18
 -- Versione del server: 5.5.35
 -- Versione PHP: 5.4.6-1ubuntu1.7
 
@@ -59,18 +59,7 @@ CREATE TABLE IF NOT EXISTS `articoli` (
   UNIQUE KEY `id` (`id`),
   KEY `pizze_fk` (`pizza_id`),
   KEY `ordini_fk` (`ordine_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
-
---
--- Dump dei dati per la tabella `articoli`
---
-
-INSERT INTO `articoli` (`id`, `size`, `qty`, `prezzo`, `pizza_id`, `ordine_id`) VALUES
-(1, 'normale', 1, 2.5, 1, 1),
-(2, 'normale', 1, 2.5, 2, 1),
-(3, 'normale', 10, 45, 4, 2),
-(4, 'grande', 5, 25, 5, 3),
-(5, 'ridotta', 5, 15, 3, 3);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -140,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `indirizzi` (
 --
 
 INSERT INTO `indirizzi` (`id`, `destinatario`, `via_num`, `citta`, `provincia`, `cap`, `telefono`) VALUES
-(1, 'Mattia Contini', 'via Monte Claro 27', 'Sinnai', 'Cagliari', '09048', '0987654321');
+(1, 'Mattia Contini', 'via Monte Biagio 27', 'SÃ¬nnai', 'CA', '09088', '0987654322');
 
 -- --------------------------------------------------------
 
@@ -156,16 +145,7 @@ CREATE TABLE IF NOT EXISTS `ordini` (
   `cliente_id` bigint(20) unsigned DEFAULT NULL,
   UNIQUE KEY `id` (`id`),
   KEY `clienti_fk` (`cliente_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dump dei dati per la tabella `ordini`
---
-
-INSERT INTO `ordini` (`id`, `data_conclusione`, `data_creazione`, `subtotale`, `cliente_id`) VALUES
-(1, '0000-00-00 00:00:00', '2015-09-04 10:07:39', 5, 1),
-(2, '0000-00-00 00:00:00', '2015-09-04 15:46:54', 45, 1),
-(3, '0000-00-00 00:00:00', '2015-09-04 23:12:00', 40, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -189,8 +169,8 @@ CREATE TABLE IF NOT EXISTS `pagamenti` (
 --
 
 INSERT INTO `pagamenti` (`id`, `saldo`, `num_carta`, `cod_carta`, `scadenza_carta`, `titolare_carta`, `tipo_carta`) VALUES
-(1, 50, '1451541414541545', '123', '2019-09-01', 'Mattia Contini', 'Postepay'),
-(2, 20.6, '1751541494544541', '321', '2025-04-01', 'Mateo Contin', 'Visa');
+(1, 882, '1451541414541545', '123', '2019-09-01', 'Mattia Contini', 'Postepay'),
+(2, 408, '1751541494544541', '321', '2025-04-01', 'Igor Maria Contini', 'Visa');
 
 -- --------------------------------------------------------
 

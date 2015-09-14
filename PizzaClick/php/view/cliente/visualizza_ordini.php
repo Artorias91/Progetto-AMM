@@ -7,7 +7,7 @@
         <tr>
             <th>n.</th>
             <th>Data ordine</th>
-            <th style="width: 45%;">Articoli<br><span style="font-size: x-small;">[qt&agrave;, tipo, dimensione e prezzo]</span></th>
+            <th>Articoli<br><span style="font-size: x-small;">[qt&agrave;, tipo, dimensione e prezzo]</span></th>
             <th>Subtotale<br><span style="font-size: small;">(EURO)</span></th>
             <th>Stato</th>
         </tr>

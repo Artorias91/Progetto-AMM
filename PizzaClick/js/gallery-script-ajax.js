@@ -15,13 +15,6 @@ function changePizza(pizza) {
 
     $('a.galleryBullet').removeClass("active");
     
-    /* stranezze: a volte funziona altre no 
-     * (probabilmente dovuto ad un conflitto tra id) ...
-     */
-//    $('a.galleryBullet#' + pizza.id).addClass("active");
-    
-    /* ... per questo motivo, meglio usare javascript
-     */
     document.getElementsByClassName("galleryBullet")[pizza.id]
     .className += " active";
 
