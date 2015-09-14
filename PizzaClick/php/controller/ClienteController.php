@@ -81,7 +81,6 @@ class ClienteController extends BaseController {
                         
                         break;
                     case 'indirizzo':
-                        $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);                        
                         
                         $vd->setSottoPagina('indirizzo');
                         $vd->setBreadcrumb("Modifica indirizzo di consegna");
