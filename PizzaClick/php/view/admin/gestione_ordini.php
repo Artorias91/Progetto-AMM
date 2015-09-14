@@ -6,9 +6,9 @@
     <thead>
         <tr>
             <th>Indirizzo cliente</th>
-            <th>Data ordine <a href="">&dtrif;</a></th>
+            <th>Data ordine<!-- <a href="">&dtrif;</a>--></th>
             <th style="width: 45%;">Articoli<br><span style="font-size: x-small;">[qt&agrave;, tipo, dimensione e prezzo]</span></th>
-            <th>Subtotale<br><span style="font-size: small;">(EURO) <a href="">&utrif;</a></span></th>
+            <th>Subtotale<br><span style="font-size: small;">(EURO)<!-- <a href="">&utrif;</a> --></span></th>
             <th>-</th>
         </tr>
     </thead>
