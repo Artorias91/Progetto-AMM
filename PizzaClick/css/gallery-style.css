@@ -1,7 +1,3 @@
-.galleryPreviewArrows a {
-    transition: all 150ms linear;
-}
-
 .galleryContent {
     width: 100%;
 }
@@ -71,7 +67,6 @@ span.price {
 
 .galleryPreviewArrows a:hover {
     background: #000;
-    margin-top: -40px;
 }
 
 
