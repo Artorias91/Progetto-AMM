@@ -4,7 +4,7 @@
 
  <!--script e css--> 
 <script type="text/javascript" src="../js/sidebar-form-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="../css/form-style.css">
+<link rel="stylesheet" type="text/css" href="../css/selectmenu-style.css">
 
 <script>
     function checkIfOptionIsSelected() { 
