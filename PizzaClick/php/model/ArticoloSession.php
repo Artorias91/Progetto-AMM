@@ -21,7 +21,6 @@ class ArticoloSession {
     
     /**
      * Incremento/Decremento del costo base della pizza in relazione alla dimensione
-     * sia 'Grande'
      */
     const SizeCost = 0.5;
     
