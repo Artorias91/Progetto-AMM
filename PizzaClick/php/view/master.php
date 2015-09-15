@@ -71,7 +71,7 @@
             <div class="footer">
                 <div class="footer-content">
                 <ul>
-                    <li>&Pfr;&ifr;&zfr;&zfr;&afr;&Cfr;&lfr;&ifr;&cfr;&kfr;, Mattia Contini, 2015</li>
+                    <li>PizzaClick, Mattia Contini, 2015</li>
                     <li>
                         <a class="html" href="http://validator.w3.org/check/referer">HTML Valid</a>                
                     </li>
