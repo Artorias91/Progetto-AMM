@@ -144,8 +144,7 @@ class ClienteController extends BaseController {
                     //salvataggio permanente elenco articoli
                     case 'ordina':
                         $msg = array();
-                    
-                        
+                                            
                         if(!empty($_SESSION[self::elenco_articoli])) {
                             if(isset($request['carta'])) {
                                 $carta = intval($request['carta']);
@@ -179,7 +178,7 @@ class ClienteController extends BaseController {
                         $pagamenti = PagamentoFactory::instance()->getListaPagamentiPerCliente($user);                        
 
                         break;
-                    
+                    //rimuove un articolo dal carrello
                     case 'remove':
                         if(isset($request['key'])) {
                             $key = intval($request['key']);
@@ -203,7 +202,7 @@ class ClienteController extends BaseController {
                         break;
                     
                     /**
-                     * è stato aggiunto al carrello un "articolo", 
+                     * è stato aggiunto un "articolo" al carrello, 
                      * ovvero una quantità di pizze di un determinato tipo e di una certa dimensione
                      */
                     case 'add':
@@ -250,7 +249,7 @@ class ClienteController extends BaseController {
                         exit();
                         
                         break;
-                    
+                    //visualizza i dettagli di un metodo di pagamento selezionato
                     case 'v_pagamento':
                         $msg = array();
 //                        var_dump($request);
@@ -272,7 +271,6 @@ class ClienteController extends BaseController {
                             $vd->setSottoPagina('pagamento');
                         }          
                         
-//                        $vd->setBreadcrumb("Visualizza i tuoi metodi di pagamento");                            
                         $this->showHomeUser($vd);                        
                         break;
                     case 'aggiorna_indirizzo':
@@ -293,6 +291,7 @@ class ClienteController extends BaseController {
                         
                         $this->showHomeUser($vd);                        
                         break;
+                    // aggiorna username, e-mail
                     case 'aggiorna_info_base':
                         $msg = array();
                         
@@ -308,7 +307,8 @@ class ClienteController extends BaseController {
                         break;
                     case 'logout':
                         $this->logout($vd);
-                        break;                    
+                        break;
+                    // ajax: click di un bullet: cambia pizza visualizzata sulla gallery
                     case 'go':
                         $vd->toggleJson();
 
@@ -320,6 +320,7 @@ class ClienteController extends BaseController {
                         $pizza = $listaPizzeConImg[$index];
 
                         break;
+                    // ajax: click next arrow: visualizza la pizza successiva                        
                     case 'next':
                         $vd->toggleJson();
 
@@ -336,6 +337,7 @@ class ClienteController extends BaseController {
                         $pizza = $listaPizzeConImg[$index];
 
                         break;
+                    // ajax: click previous arrow: visualizza la pizza precedente                                                
                     case 'prev':
                         $vd->toggleJson();
 
@@ -364,6 +366,10 @@ class ClienteController extends BaseController {
         require basename(__DIR__) . '/../view/master.php';
     }
     
+    /**
+     * Calcola il numero totale di pizze presenti nel carrello
+     * @return int qta' totale di pizze
+     */    
     private function getQtyTotalePizze() {
         $totale = 0;
         if(!empty($_SESSION[self::elenco_articoli])) {
@@ -377,7 +383,7 @@ class ClienteController extends BaseController {
     /**
      * Calcola il prezzo dell'ordine attuale
      * @param boolean $flag abilita/disabilita il calcolo del prezzo di spedizione
-     * @return float prezzo dell'ordine
+     * @return float prezzo (totale/subtotale) dell'ordine
      */
     private function getSubTotale($flag = false) {
         (!$flag) ? $totale = 0 : $totale = 3.;
@@ -386,7 +392,6 @@ class ClienteController extends BaseController {
                 $totale += $value->getPrezzoArticolo();            
             }            
         }
-        
         
         return number_format((float)$totale, 2, ',', '');        
     }
@@ -427,7 +432,6 @@ class ClienteController extends BaseController {
         }
         return false;
     }
-
         
     
     /**
