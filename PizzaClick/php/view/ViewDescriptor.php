@@ -100,9 +100,9 @@ class ViewDescriptor {
     private $json;
     
     
-//    private $order;
-//    private $orderList;
+    private $breadcrumb;
     
+    private $titoloStep;
     
     /**
      * Costruttore
@@ -342,10 +342,6 @@ class ViewDescriptor {
         return '';
     }
     
-    private $breadcrumb;
-    
-    private $titoloStep;
-    
     public function setBreadcrumb($bd) {
         $this->breadcrumb = $bd;
     } 
@@ -358,8 +354,7 @@ class ViewDescriptor {
     } 
     public function getTitoloStep() {
         return $this->titoloStep;
-    } 
-    
+    }
     
 }
 
