@@ -206,20 +206,23 @@ class ClienteController extends BaseController {
                      * ovvero una quantità di pizze di un determinato tipo e di una certa dimensione
                      */
                     case 'add':
-                        //controlla la provenienza della richiesta: form's sidebar ...
+                        //controlla la provenienza della richiesta: selectmenu form ...
                         if(isset($request['pizza-selection']) && 
                                 isset($request['size']) && 
                                 isset($request['quantity'])) {
                             
-                            $articolo = 
-                                new ArticoloSession(
-                                        PizzaFactory::instance()->cercaPizzaPerId(intval($request['pizza-selection'])), 
-                                        $request['size'], 
-                                        intval($request['quantity']));
-                            
-                            $this->aggiungiArticolo($articolo);
+                            if(PizzaFactory::instance()->
+                                    cercaPizzaPerId(intval($request['pizza-selection']))) {
+                                $articolo = 
+                                    new ArticoloSession(
+                                            PizzaFactory::instance()->cercaPizzaPerId(intval($request['pizza-selection'])), 
+                                            $request['size'], 
+                                            intval($request['quantity']));
+
+                                $this->aggiungiArticolo($articolo);                                
+                            }
                         }
-                        //... altrimenti form's gallery 
+                        //... altrimenti gallery form
                         if(isset($request['pizza-gallery']) && 
                                 isset($request['size']) && 
                                 isset($request['quantity'])) {
