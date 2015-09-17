@@ -18,7 +18,7 @@
 
 <div class="selection">
     <h2>Scegli la tua pizza preferita</h2><hr>
-    <form class="selection" id="aggiungi" method="post" action="index.php?page=cliente" onsubmit="return checkIfOptionIsSelected()">
+    <form id="aggiungi" method="post" action="index.php?page=cliente" onsubmit="return checkIfOptionIsSelected()">
         <label for="pizza">Tipo</label>
         <select name="pizza-selection" id="pizza-selection">
            <option value="" selected disabled>Seleziona ...</option>
