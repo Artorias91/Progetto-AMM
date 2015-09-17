@@ -147,7 +147,7 @@ class PizzaFactory {
 
         $stmt->close();
 
-        return self::creaPizzaDaArray($row, $row['id'] == NULL ? false : true);
+        return self::creaPizzaDaArray($row, $row['image_url'] == NULL ? false : true);
     }
 
     
